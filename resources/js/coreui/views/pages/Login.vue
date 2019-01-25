@@ -41,7 +41,8 @@
                 </b-input-group>
                 <b-row>
                   <b-col cols="6">
-                    <b-button variant="primary" class="px-4" @click="submit">Login</b-button>
+                    <!--  <b-button variant="primary" class="px-4" @click="submit">Login</b-button> -->
+                    <b-button @click="$router.push('home')" variant="primary" class="px-4">Login</b-button>
                   </b-col>
                   <b-col cols="6" class="text-right">
                     <b-button variant="link" class="px-0">Wachtwoord vergeten?</b-button>
@@ -96,7 +97,7 @@ export default {
   },
   methods: {
     submit() {
-      this.$v.$touch();
+      //this.$v.$touch();
     }
   }
 };
