@@ -24,7 +24,7 @@ export default new Router({
   scrollBehavior : () => ({ y: 0 }),
   routes         : [
     {
-      path     : '/',
+      path     : '/testdb',
       redirect : '/dashboard',
       name     : 'Home',
       component: Full,
@@ -54,7 +54,8 @@ export default new Router({
           component: Page500,
         },
         {
-          path     : 'login',
+          path     : '/',
+          redirect : '/pages/login',
           name     : 'Login',
           component: Login,
         },

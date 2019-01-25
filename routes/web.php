@@ -17,4 +17,4 @@ Route::get('/{vue_capture?}', 'AppController@index')
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
