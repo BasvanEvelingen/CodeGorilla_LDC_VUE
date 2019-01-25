@@ -1,17 +1,11 @@
 <template>
   <footer class="app-footer">
     <span>
-      <a href="http://coreui.io">
-        CoreUI
-      </a> &copy; 2018 creativeLabs.
+      <a href="CodeGorilla.nl">&copy; 2018 CodeGorilla.</a>
     </span>
-    <span class="ml-auto">
-      Powered by <a href="http://coreui.io">
-        CoreUI
-      </a>
-    </span>
+    <span class="ml-auto">DeddeBas</span>
   </footer>
 </template>
 <script>
-export default { name: 'CFooter' }
+export default { name: "CFooter" };
 </script>

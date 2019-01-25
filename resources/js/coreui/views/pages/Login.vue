@@ -58,7 +58,11 @@
                 <div>
                   <h2>Registreren?</h2>
                   <p></p>
-                  <b-button variant="danger" class="active mt-3">Registreren</b-button>
+                  <b-button
+                    @click="$router.push('register')"
+                    variant="danger"
+                    class="active mt-3"
+                  >Registreren</b-button>
                 </div>
               </b-card-body>
             </b-card>

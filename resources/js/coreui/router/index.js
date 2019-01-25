@@ -60,12 +60,12 @@ export default new Router({
           component: Page500,
         },
         {
-          path     : '/login',
+          path     : '/Login',
           name     : 'Login',
           component: Login,
         },
         {
-          path     : 'register',
+          path     : '/register',
           name     : 'Register',
           component: Register,
         },
