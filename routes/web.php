@@ -14,3 +14,7 @@
 Route::get('/{vue_capture?}', 'AppController@index')
     ->middleware(['speed'])
     ->where('vue_capture', '[\/\w\.\,\-]*');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
