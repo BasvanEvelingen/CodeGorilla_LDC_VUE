@@ -13,18 +13,24 @@ class Authenticate
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, ...$guards)
     {
-        if (!session()->has('auth') && !isset(session('auth')->access_token)) {
-            $data = [
-                'status'  => 401,
-                'success' => false,
-                'message' => 'Token not provided',
-            ];
-
-            return response()->json($data, $data['status'], 401);
+        if ($this->authenticate($request, $guards) === 'authentication_error') {
+            return response()->json(['error' => 'Unauthorized']);
         }
-
         return $next($request);
+    }
+
+    protected function authenticate($request, array $guards)
+    {
+        if (empty($guards)) {
+            $guards = [null];
+        }
+        foreach ($guards as $guard) {
+            if ($this->auth->guard($guard)->check()) {
+                return $this->auth->shouldUse($guard);
+            }
+        }
+        return 'authentication_error';
     }
 }

@@ -20,8 +20,13 @@ Route::get('register', array('as'=>'register','uses'=>'UserController@getRegiste
 Route::post('register',array('uses'=>'UserController@postRegister'));
 });*/
 
-Route::group(['middleware' => ['api']], function () {
-    Route::post('login', 'Auth\LoginController@login');
-    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-    Route::post('register', 'Auth\RegisterController@register');
+Route::prefix('auth')->group(function () {
+    Route::post('resgister', 'AuthController@register');
+    Route::post('login', 'AuthController@login');
+    Route::get('refresh', 'AuthController@refresh');
+
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::get('user', 'AuthController@user');
+        Route::post('logout', 'AuthController@logout');
+    });
 });
