@@ -22,16 +22,24 @@
                     class="form-control"
                     placeholder="Gebruikersnaam"
                   />
-                  <span class="error-message">Dit veld is vereist.</span>
+                  <span
+                    v-if="$v.$dirty && $v.username.$invalid"
+                    class="error-message"
+                  >{{usernameErrorMessage}}</span>
                 </b-input-group>
+
                 <!-- Email -->
                 <b-input-group class="mb-3">
                   <b-input-group-prepend>
                     <b-input-group-text class="unselectable">@</b-input-group-text>
                   </b-input-group-prepend>
                   <b-input type="email" v-model="email" class="form-control" placeholder="Email"/>
-                  <span class="error-message">Dit veld is vereist.</span>
+                  <span
+                    v-if="$v.$dirty && $v.email.$invalid"
+                    class="error-message"
+                  >{{emailErrorMessage}}</span>
                 </b-input-group>
+
                 <!-- Wachtwoord -->
                 <b-input-group class="mb-3">
                   <b-input-group-prepend>
@@ -44,9 +52,11 @@
                     v-model="password"
                     class="form-control"
                     placeholder="Wachtwoord"
-                    required
                   />
-                  <span class="error-message">Dit veld is vereist.</span>
+                  <span
+                    v-if="$v.$dirty && $v.password.$invalid"
+                    class="error-message"
+                  >{{passwordErrorMessage}}</span>
                 </b-input-group>
 
                 <!-- Bevestig wachtwoord -->
@@ -62,9 +72,11 @@
                       v-model="passwordConfirmation"
                       class="form-control"
                       placeholder="Bevestig wachtwoord"
-                      required
                     />
-                    <span class="error-message">Dit veld is vereist.</span>
+                    <span
+                      v-if="$v.$dirty && $v.passwordConfirmation.$invalid"
+                      class="error-message"
+                    >{{passwordConfirmationErrorMessage}}</span>
                   </b-input-group>
                 </div>
                 <!-- Submit knop -->
@@ -83,10 +95,11 @@
 <!-- begin javascript sectie -->
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 import { email, required, sameAs, minLength } from "vuelidate/lib/validators";
 
 export default {
-  name: "Register",
+  name: "RegisterForm",
   data() {
     return {
       username: "",
@@ -100,18 +113,83 @@ export default {
     username: { required, minLength: minLength(6) },
     email: { required, email },
     password: { required, minLength: minLength(6) },
-    cpassword: { required, sameAsPassword: sameAs("password") }
+    passwordConfirmation: { required, sameAsPassword: sameAs("password") }
+  },
+  computed: {
+    usernameErrorMessage() {
+      if (!this.$v.username.required) {
+        return "Gebruikersnaam is vereist.";
+      }
+    },
+    emailErrorMessage() {
+      if (!this.$v.email.required) {
+        return "Emailadres is vereist.";
+      } else if (!this.$v.email.email) {
+        return "Vul alstublieft een geldig email-adres in.";
+      }
+    },
+    passwordErrorMessage() {
+      if (!this.$v.password.required) {
+        return "Wachtwoord is vereist.";
+      } else if (!this.$v.password.minLength) {
+        return "Het wachtwoord moet minimaal 6 tekens bevatten.";
+      }
+    },
+    passwordConfirmationErrorMessage() {
+      if (!this.$v.passwordConfirmation.required) {
+        return "Bevestigen van wachtwoord is vereist.";
+      } else if (!this.$v.passwordConfirmation.sameAs) {
+        return "Wachtwoorden komen niet overeen.";
+      }
+    }
   },
   methods: {
     // methode die user registreert in systeem
     registerUser() {
       this.$v.$touch();
       if (this.$v.$invalid) {
-        this.submitStatus = "ERROR";
+        this.sAlert();
       } else {
-        this.submitStatus = "PENDING";
+        axios
+          .post("register", {
+            name: this.username,
+            email: this.email,
+            password: this.password,
+            password_confirmation: this.passwordConfirmation
+          })
+          .then(() => {
+            this.sSuccess();
+          })
+          .catch(error => console.log(error));
         // axios api register request.
       }
+    },
+    sAlert() {
+      const swalWithBootstrapButtons = Swal.mixin({
+        confirmButtonClass: "btn btn-danger",
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        type: "error",
+        title: "Fout in formulier",
+        text:
+          "Er zijn fouten geconstateerd bij het invullen van het formulier.",
+        footer: "druk op ok om fouten te herstellen",
+        confirmButtonText: "Ok"
+      });
+    },
+    sSuccess() {
+      const swalWithBootstrapButtons = Swal.mixin({
+        confirmButtonClass: "btn btn-success",
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        type: "success",
+        title: "Gelukt",
+        text: "U kunt nu inloggen door op link hieronder te klikken.",
+        footer: "<router-link to='login'>Inloggen</router-link",
+        confirmButtonText: "Ok"
+      });
     }
   }
 };
@@ -136,5 +214,11 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.error-message {
+  color: #ff4119;
+  font-size: 11px;
+  margin: 5px 0 0 5px;
 }
 </style>

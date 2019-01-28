@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // Containers
-import LDC from '@/containers/LDC'
+import Full from '@/containers/Full'
 
 // Views
 import Dashboard from '@/views/sample/Dashboard'
@@ -11,7 +11,10 @@ import Dashboard from '@/views/sample/Dashboard'
 import Page404 from '@/views/pages/Page404'
 import Page500 from '@/views/pages/Page500'
 import Login from '@/views/pages/Login'
-import Register from '@/views/pages/Register'
+import RegisterForm from '@/views/pages/RegisterForm'
+
+// Sample route
+import sample from './sample'
 
 Vue.use(Router)
 
@@ -22,21 +25,22 @@ export default new Router({
   routes         : [
     {
       path     : '/',
-      redirect : '/Login',
+      redirect : '/login',
       name     : 'login',
       component: Login,
     },
     {
-      path     : '/home',
+      path     : '/testdb',
       redirect : '/dashboard',
       name     : 'Home',
-      component: LDC,
+      component: Full,
       children : [
         {
           path     : 'dashboard',
           name     : 'Dashboard',
           component: Dashboard,
         },
+        ...sample,
       ],
     },
     {
@@ -56,14 +60,14 @@ export default new Router({
           component: Page500,
         },
         {
-          path     : '/Login',
+          path     : '/login',
           name     : 'Login',
           component: Login,
         },
         {
-          path     : '/register',
-          name     : 'Register',
-          component: Register,
+          path     : '/registerform',
+          name     : 'registerform',
+          component: RegisterForm,
         },
       ],
     },

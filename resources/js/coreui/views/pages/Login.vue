@@ -3,12 +3,12 @@
     <div class="container">
       <b-row class="justify-content-center">
         <b-col md="8">
-          <b-img :src="'/images/ldc_cglogo.svg'"/>
+          <b-img class="ldc-picture" :src="'/images/ldc_cglogo.svg'"/>
           <b-card-group>
             <b-card no-body class="p-4 rounded-left">
               <b-card-body>
-                <h1>Login</h1>
-                <p class="text-muted">Inloggen op uw account</p>
+                <h1 class="unselectable">Login</h1>
+                <p class="text-muted unselectable">Inloggen op uw account</p>
                 <b-input-group class="mb-3">
                   <b-input-group-prepend>
                     <b-input-group-text>
@@ -21,8 +21,9 @@
                     type="text"
                     class="form-control"
                     placeholder="Gebruikersnaam"
+                    required
                   />
-                  <b-form-invalid-feedback>Vereist</b-form-invalid-feedback>
+                  <b-form-invalid-feedback class="unselectable">Vereist</b-form-invalid-feedback>
                 </b-input-group>
                 <b-input-group class="mb-4">
                   <b-input-group-prepend>
@@ -36,16 +37,16 @@
                     type="password"
                     class="form-control"
                     placeholder="Wachtwoord"
+                    required
                   />
-                  <b-form-invalid-feedback>Vereist</b-form-invalid-feedback>
+                  <b-form-invalid-feedback class="unselectable">Vereist</b-form-invalid-feedback>
                 </b-input-group>
                 <b-row>
                   <b-col cols="6">
-                    <!--  <b-button variant="primary" class="px-4" @click="submit">Login</b-button> -->
-                    <b-button @click="$router.push('home')" variant="primary" class="px-4">Login</b-button>
+                    <b-button variant="primary" class="px-4" @click="submit">Inloggen</b-button>
                   </b-col>
                   <b-col cols="6" class="text-right">
-                    <b-button variant="link" class="px-0">Wachtwoord vergeten?</b-button>
+                    <b-button variant="link" class="px-0 unselectable">Wachtwoord vergeten?</b-button>
                   </b-col>
                 </b-row>
               </b-card-body>
@@ -57,10 +58,10 @@
             >
               <b-card-body class="text-center">
                 <div>
-                  <h2>Registreren?</h2>
+                  <h2 class="unselectable">Registreren?</h2>
                   <p></p>
                   <b-button
-                    @click="$router.push('register')"
+                    @click="$router.push('registerform')"
                     variant="danger"
                     class="active mt-3"
                   >Registreren</b-button>
@@ -97,7 +98,7 @@ export default {
   },
   methods: {
     submit() {
-      //this.$v.$touch();
+      this.$v.$touch();
     }
   }
 };
@@ -113,5 +114,22 @@ export default {
     #efeeec 75%,
     #e9e9e7 100%
   );
+}
+.ldc-picture {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 </style>

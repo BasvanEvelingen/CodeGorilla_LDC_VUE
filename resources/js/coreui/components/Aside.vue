@@ -101,7 +101,7 @@
         <hr class="mx-3 my-0">
         <callout variant="success" class="m-0 py-3">
           <div>
-            <strong>voorbeeld</strong> Meetup
+            <strong>#10 Startups.Garden</strong> Meetup
           </div>
           <small class="text-muted mr-3">
             <i class="icon-calendar"/>&nbsp; 1 - 3pm
