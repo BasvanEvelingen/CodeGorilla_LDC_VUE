@@ -34,7 +34,7 @@ Vue.filter('state', (value, dirtyOnly = true) => {
 })
 
 Vue.use(VueAxios, axios)
-axios.defaults.baseURL = `${proces.env.MIX_APP_URL}/api`
+axios.defaults.baseURL = `${process.env.MIX_APP_URL}/api`
 Vue.use(VueAuth, auth)
 
 Vue.component('b-loading', Loading)
