@@ -100,10 +100,10 @@ import { email, required, sameAs, minLength } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
-      username: "",
-      email: "",
-      password: "",
-      password_confirmation: ""
+      username: null,
+      email: null,
+      password: null,
+      password_confirmation: null
     };
   },
   validations: {

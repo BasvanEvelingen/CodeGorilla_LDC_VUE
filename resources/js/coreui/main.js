@@ -29,15 +29,6 @@ Vue.use(Vuelidate)
 Vue.router = router
 Vue.use(VueRouter)
 
-Vue.filter('state', (value, dirtyOnly = true) => {
-  if (dirtyOnly) {
-    if (!value.$dirty)
-      return null
-  }
-
-  return !value.$invalid ? 'valid' : 'invalid'
-})
-
 Vue.use(VueAxios, axios)
 axios.defaults.baseURL = `${process.env.MIX_APP_URL}/api`
 Vue.use(VueAuth, auth)

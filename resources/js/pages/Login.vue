@@ -19,11 +19,9 @@
                     </b-input-group-prepend>
                     <b-input
                       v-model="email"
-                      :state="$v.email | state"
                       type="text"
                       class="form-control"
                       placeholder="Uw email"
-                      required
                     />
                     <span
                       v-if="$v.$dirty && $v.email.$invalid"
@@ -32,7 +30,7 @@
                   </b-input-group>
 
                   <!-- wachtwoord -->
-                  <b-input-group class="mb-4">
+                  <b-input-group class="mb-3">
                     <b-input-group-prepend>
                       <b-input-group-text>
                         <i class="icon-lock"/>
@@ -40,20 +38,18 @@
                     </b-input-group-prepend>
                     <b-input
                       v-model="password"
-                      :state="$v.password | state"
                       type="password"
                       class="form-control"
                       placeholder="Wachtwoord"
-                      required
                     />
-                    <b-form-invalid-feedback class="unselectable">Vereist</b-form-invalid-feedback>
+                    <span
+                      v-if="$v.$dirty && $v.password.$invalid"
+                      class="error-message"
+                    >{{passwordErrorMessage}}</span>
                   </b-input-group>
                   <b-row>
                     <b-col cols="6">
                       <b-button variant="primary" class="px-4" @click="submit">Inloggen</b-button>
-                    </b-col>
-                    <b-col cols="6" class="text-right">
-                      <b-button variant="link" class="px-0 unselectable">Wachtwoord vergeten?</b-button>
                     </b-col>
                   </b-row>
                 </b-form>
@@ -69,7 +65,7 @@
                   <h2 class="unselectable">Registreren?</h2>
                   <p></p>
                   <b-button
-                    @click="$router.push('registerform')"
+                    @click="$router.push('register')"
                     variant="danger"
                     class="active mt-3"
                   >Registreren</b-button>
@@ -84,6 +80,7 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import { email, required } from "vuelidate/lib/validators";
 
 export default {
@@ -96,6 +93,20 @@ export default {
   validations: {
     username: { required },
     password: { required }
+  },
+  computed: {
+    emailErrorMessage() {
+      if (!this.$v.email.required) {
+        return "Emailadres is vereist.";
+      } else if (!this.$v.email.email) {
+        return "Vul alstublieft een geldig email-adres in.";
+      }
+    },
+    passwordErrorMessage() {
+      if (!this.$v.password.required) {
+        return "Wachtwoord is vereist.";
+      }
+    }
   },
   methods: {
     login() {
