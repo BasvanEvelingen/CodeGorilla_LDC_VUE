@@ -1,36 +1,28 @@
 <template>
-  <b-row>
-    <b-col sm="12">
-      <b-nav>
-        <!-- niet ingelogd -->
-        <div v-if="!$auth.check()">
-          <b-nav-item
-            class="nav_link"
-            v-for="(route, key) in routes.unlogged"
-            v-bind:key="route.path"
-          >
-            <router-link :to="{ name : route.path }" :key="key">{{route.name}}</router-link>
-          </b-nav-item>
-        </div>
-        <!-- ingelogde gebruiker -->
-        <div v-if="$auth.check(1)">
-          <b-nav-item class="nav_link" v-for="(route, key) in routes.user" v-bind:key="route.path">
-            <router-link :to="{ name : route.path }" :key="key">{{route.name}}</router-link>
-          </b-nav-item>
-        </div>
-        <!-- ingelogde beheerder -->
-        <div v-if="$auth.check(2)">
-          <b-nav-item class="nav_link" v-for="(route, key) in routes.admin" v-bind:key="route.path">
-            <router-link :to="{ name : route.path }" :key="key">{{route.name}}</router-link>
-          </b-nav-item>
-        </div>
-        <!-- uitloggen -->
-        <b-nav-item class="nav_link" v-if="$auth.check()">
-          <a href="#" @click.prevent="$auth.logout()">Logout</a>
-        </b-nav-item>
-      </b-nav>
-    </b-col>
-  </b-row>
+  <ul class="navbar-nav ml-auto">
+    <!-- niet ingelogd -->
+    <li v-if="!$auth.check()" class="nav-item">
+      <a class="nav_link" v-for="(route, key) in routes.unlogged" v-bind:key="route.path">
+        <router-link :to="{ name : route.path }" :key="key">{{route.name}}</router-link>
+      </a>
+    </li>
+    <!-- ingelogde gebruiker -->
+    <li v-if="$auth.check(1)" class="nav-item">
+      <a class="nav_link" v-for="(route, key) in routes.user" v-bind:key="route.path">
+        <router-link :to="{ name : route.path }" :key="key">{{route.name}}</router-link>
+      </a>
+    </li>
+    <!-- ingelogde beheerder -->
+    <li v-if="$auth.check(2)" class="nav-item">
+      <a class="nav_link" v-for="(route, key) in routes.admin" v-bind:key="route.path">
+        <router-link :to="{ name : route.path }" :key="key">{{route.name}}</router-link>
+      </a>
+    </li>
+    <!-- uitloggen -->
+    <li class="nav-item" v-if="$auth.check()">
+      <a class="nav_link" href="#" @click.prevent="$auth.logout()">Logout</a>
+    </li>
+  </ul>
 </template>
 
 <script>
