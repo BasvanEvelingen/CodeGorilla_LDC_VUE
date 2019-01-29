@@ -21,7 +21,7 @@ Route::post('register',array('uses'=>'UserController@postRegister'));
 });*/
 
 Route::prefix('auth')->group(function () {
-    Route::post('resgister', 'AuthController@register');
+    Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
     Route::get('refresh', 'AuthController@refresh');
 
@@ -29,4 +29,10 @@ Route::prefix('auth')->group(function () {
         Route::get('user', 'AuthController@user');
         Route::post('logout', 'AuthController@logout');
     });
+});
+
+Route::group(['middleware' => 'auth:api'], function(){
+    //Users
+    Route::get('users', 'UserController@index')->middleware('isAdmin');
+    Route::get('users/{id}', 'UserController@show')->middleware('isAdminOrSelf');
 });
