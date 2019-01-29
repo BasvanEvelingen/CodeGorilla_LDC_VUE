@@ -43,6 +43,17 @@ export default new Router({
       ],
     },
     {
+      path     : '/admin',
+      name     : 'admin.dashboard',
+      component: 'AdminDashboard',
+      meta     : {
+        auth: {
+          roles            : 2, redirect         : { name: 'login' }, forbiddenRedirect: '/403',
+        },
+      },
+
+    },
+    {
       path     : '/pages',
       redirect : '/pages/404',
       name     : 'Pages',

@@ -9,46 +9,48 @@
               <b-card-body>
                 <h1 class="unselectable">Login</h1>
                 <p class="text-muted unselectable">Inloggen op uw account</p>
-                <b-input-group class="mb-3">
-                  <b-input-group-prepend>
-                    <b-input-group-text>
-                      <i class="icon-user"/>
-                    </b-input-group-text>
-                  </b-input-group-prepend>
-                  <b-input
-                    v-model="form.username"
-                    :state="$v.form.username | state"
-                    type="text"
-                    class="form-control"
-                    placeholder="Gebruikersnaam"
-                    required
-                  />
-                  <b-form-invalid-feedback class="unselectable">Vereist</b-form-invalid-feedback>
-                </b-input-group>
-                <b-input-group class="mb-4">
-                  <b-input-group-prepend>
-                    <b-input-group-text>
-                      <i class="icon-lock"/>
-                    </b-input-group-text>
-                  </b-input-group-prepend>
-                  <b-input
-                    v-model="form.password"
-                    :state="$v.form.password | state"
-                    type="password"
-                    class="form-control"
-                    placeholder="Wachtwoord"
-                    required
-                  />
-                  <b-form-invalid-feedback class="unselectable">Vereist</b-form-invalid-feedback>
-                </b-input-group>
-                <b-row>
-                  <b-col cols="6">
-                    <b-button variant="primary" class="px-4" @click="submit">Inloggen</b-button>
-                  </b-col>
-                  <b-col cols="6" class="text-right">
-                    <b-button variant="link" class="px-0 unselectable">Wachtwoord vergeten?</b-button>
-                  </b-col>
-                </b-row>
+                <b-form autocomplete="off" @submit.prevent="login" method="POST">
+                  <b-input-group class="mb-3">
+                    <b-input-group-prepend>
+                      <b-input-group-text>
+                        <i class="icon-user"/>
+                      </b-input-group-text>
+                    </b-input-group-prepend>
+                    <b-input
+                      v-model="email"
+                      :state="$v.email | state"
+                      type="text"
+                      class="form-control"
+                      placeholder="Uw email"
+                      required
+                    />
+                    <b-form-invalid-feedback class="unselectable">Vereist</b-form-invalid-feedback>
+                  </b-input-group>
+                  <b-input-group class="mb-4">
+                    <b-input-group-prepend>
+                      <b-input-group-text>
+                        <i class="icon-lock"/>
+                      </b-input-group-text>
+                    </b-input-group-prepend>
+                    <b-input
+                      v-model="password"
+                      :state="$v.password | state"
+                      type="password"
+                      class="form-control"
+                      placeholder="Wachtwoord"
+                      required
+                    />
+                    <b-form-invalid-feedback class="unselectable">Vereist</b-form-invalid-feedback>
+                  </b-input-group>
+                  <b-row>
+                    <b-col cols="6">
+                      <b-button variant="primary" class="px-4" @click="submit">Inloggen</b-button>
+                    </b-col>
+                    <b-col cols="6" class="text-right">
+                      <b-button variant="link" class="px-0 unselectable">Wachtwoord vergeten?</b-button>
+                    </b-col>
+                  </b-row>
+                </b-form>
               </b-card-body>
             </b-card>
             <b-card
@@ -82,10 +84,8 @@ export default {
   name: "Login",
   data() {
     return {
-      form: {
-        username: "",
-        password: ""
-      }
+      email: null,
+      password: null
     };
   },
   validations() {
@@ -97,8 +97,30 @@ export default {
     };
   },
   methods: {
-    submit() {
+    login() {
       this.$v.$touch();
+      var redirect = this.$auth.redirect();
+      var app = this;
+      this.$auth.login({
+        params: {
+          email: app.email,
+          password: app.password
+        },
+        success: function() {
+          // handle redirection
+          const redirectTo = redirect
+            ? redirect.from.name
+            : this.$auth.user().role === 2
+            ? "admin.dashboard"
+            : "dashboard";
+          this.$router.push({ name: redirectTo });
+        },
+        error: function() {
+          app.has_error = true;
+        },
+        rememberMe: true,
+        fetchUser: true
+      });
     }
   }
 };

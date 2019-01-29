@@ -8,7 +8,7 @@
             <b-card-body class="p-4">
               <h1 class="unselectable">Registreren</h1>
               <p class="text-muted unselectable">Uw account creëren</p>
-              <b-form autocomplete="off" @submit.prevent="registerUser" method="POST">
+              <b-form autocomplete="off" @submit.prevent="register" method="POST">
                 <!-- Gebruikersnaam -->
                 <b-input-group class="mb-3">
                   <b-input-group-prepend>
@@ -69,12 +69,12 @@
                     </b-input-group-prepend>
                     <b-input
                       type="password"
-                      v-model="passwordConfirmation"
+                      v-model="password_confirmation"
                       class="form-control"
                       placeholder="Bevestig wachtwoord"
                     />
                     <span
-                      v-if="$v.$dirty && $v.passwordConfirmation.$invalid"
+                      v-if="$v.$dirty && $v.password_confirmation.$invalid"
                       class="error-message"
                     >{{passwordConfirmationErrorMessage}}</span>
                   </b-input-group>
@@ -105,7 +105,7 @@ export default {
       username: "",
       email: "",
       password: "",
-      passwordConfirmation: ""
+      password_confirmation: ""
     };
   },
   /* vuelidate validatie van formulier */
@@ -113,7 +113,7 @@ export default {
     username: { required, minLength: minLength(6) },
     email: { required, email },
     password: { required, minLength: minLength(6) },
-    passwordConfirmation: { required, sameAsPassword: sameAs("password") }
+    password_confirmation: { required, sameAsPassword: sameAs("password") }
   },
   computed: {
     usernameErrorMessage() {
@@ -145,11 +145,31 @@ export default {
   },
   methods: {
     // methode die user registreert in systeem
-    registerUser() {
+    register() {
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.sAlert();
       } else {
+        this.$auth.register({
+          data: {
+            email: this.email,
+            password: this.password,
+            password_confirmation: this.password_confirmation
+          },
+          success: function() {
+            this.success = true;
+            this.$router.push({
+              name: "login",
+              params: { successRegistrationRedirect: true }
+            });
+          },
+          error: function(res) {
+            console.log(res.response.data.errors);
+          }
+        });
+      }
+
+      /* oude methode
         axios
           .post("register", {
             name: this.username,
@@ -161,8 +181,8 @@ export default {
             this.sSuccess();
           })
           .catch(error => console.log(error));
-        // axios api register request.
-      }
+          */
+      // axios api register request.
     },
     sAlert() {
       const swalWithBootstrapButtons = Swal.mixin({
