@@ -25,14 +25,13 @@ export default new Router({
   routes         : [
     {
       path     : '/',
-      redirect : '/login',
-      name     : 'login',
-      component: Login,
+      name     : 'home',
+      component: 'Home',
+      meta     : { auth: undefined },
     },
     {
-      path     : '/testdb',
-      redirect : '/dashboard',
-      name     : 'Home',
+      path     : '/dashboard',
+      name     : 'dashboard',
       component: Full,
       children : [
         {
@@ -63,10 +62,11 @@ export default new Router({
           path     : '/login',
           name     : 'Login',
           component: Login,
+          meta     : { auth: false },
         },
         {
-          path     : '/registerform',
-          name     : 'registerform',
+          path     : '/register',
+          name     : 'register',
           component: RegisterForm,
         },
       ],
