@@ -3,7 +3,6 @@
     <div class="container">
       <b-row class="justify-content-center">
         <b-col md="6" sm="8">
-          <b-img class="ldc-picture" :src="'/images/ldc_cglogo.svg'"/>
           <b-card no-body class="mx-4 rounded">
             <b-card-body class="p-4">
               <h1 class="unselectable">Registreren</h1>
@@ -216,15 +215,6 @@ export default {
 
 <!-- alleen stijl voor dit component -->
 <style scoped>
-/* niet kunnen slepen en selecteren logo */
-.ldc-picture {
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-drag: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  pointer-events: none;
-}
 /* niet kunnen selecteren van tekst */
 .unselectable {
   -webkit-touch-callout: none;

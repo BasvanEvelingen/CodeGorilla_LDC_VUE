@@ -17,7 +17,7 @@ import Loading from './components/Loading'
 import Select2 from './components/Select'
 // import App from './App'
 import Index from '../Index'
-import router from './core_router'
+import router from './router'
 import store from './store'
 
 Vue.use(BootstrapVue)

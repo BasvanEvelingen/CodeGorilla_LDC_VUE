@@ -1,30 +1,36 @@
 <template>
-  <b-nav>
-    <ul>
-      <!-- niet ingelogd -->
-      <div v-if="!$auth.check()">
-        <b-nav-item v-for="(route, key) in routes.unlogged" v-bind:key="route.path">
-          <router-link :to="{ name : route.path }" :key="key">{{route.name}}</router-link>
+  <b-row>
+    <b-col sm="12">
+      <b-nav>
+        <!-- niet ingelogd -->
+        <div v-if="!$auth.check()">
+          <b-nav-item
+            class="nav_link"
+            v-for="(route, key) in routes.unlogged"
+            v-bind:key="route.path"
+          >
+            <router-link :to="{ name : route.path }" :key="key">{{route.name}}</router-link>
+          </b-nav-item>
+        </div>
+        <!-- ingelogde gebruiker -->
+        <div v-if="$auth.check(1)">
+          <b-nav-item class="nav_link" v-for="(route, key) in routes.user" v-bind:key="route.path">
+            <router-link :to="{ name : route.path }" :key="key">{{route.name}}</router-link>
+          </b-nav-item>
+        </div>
+        <!-- ingelogde beheerder -->
+        <div v-if="$auth.check(2)">
+          <b-nav-item class="nav_link" v-for="(route, key) in routes.admin" v-bind:key="route.path">
+            <router-link :to="{ name : route.path }" :key="key">{{route.name}}</router-link>
+          </b-nav-item>
+        </div>
+        <!-- uitloggen -->
+        <b-nav-item class="nav_link" v-if="$auth.check()">
+          <a href="#" @click.prevent="$auth.logout()">Logout</a>
         </b-nav-item>
-      </div>
-      <!-- ingelogde gebruiker -->
-      <div v-if="$auth.check(1)">
-        <b-nav-item v-for="(route, key) in routes.user" v-bind:key="route.path">
-          <router-link :to="{ name : route.path }" :key="key">{{route.name}}</router-link>
-        </b-nav-item>
-      </div>
-      <!-- ingelogde beheerder -->
-      <div v-if="$auth.check(2)">
-        <b-nav-item v-for="(route, key) in routes.admin" v-bind:key="route.path">
-          <router-link :to="{ name : route.path }" :key="key">{{route.name}}</router-link>
-        </b-nav-item>
-      </div>
-      <!-- uitloggen -->
-      <b-nav-item v-if="$auth.check()">
-        <a href="#" @click.prevent="$auth.logout()">Logout</a>
-      </b-nav-item>
-    </ul>
-  </b-nav>
+      </b-nav>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
@@ -35,11 +41,11 @@ export default {
         // UNLOGGED
         unlogged: [
           {
-            name: "Register",
+            name: "Registreren",
             path: "register"
           },
           {
-            name: "Login",
+            name: "Inloggen",
             path: "login"
           }
         ],
@@ -66,3 +72,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.nav_link {
+  font-size: 2rem;
+}
+</style>
