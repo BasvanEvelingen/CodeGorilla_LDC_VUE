@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       routes: {
-        // UNLOGGED
+        // niet ingelogd
         unlogged: [
           {
             name: "Registreren",
@@ -50,14 +50,14 @@ export default {
           }
         ],
 
-        // LOGGED USER
+        // gebruiker ingelogd
         user: [
           {
             name: "Dashboard",
             path: "user.dashboard"
           }
         ],
-        // LOGGED ADMIN
+        // beheerder ingelogd
         admin: [
           {
             name: "Dashboard",

@@ -24,7 +24,11 @@ Vue.use(BootstrapVue)
 Vue.use(Notifications)
 Vue.use(Sweetalert)
 Vue.use(Vuelidate)
+
+// Set Vue router
+Vue.router = router
 Vue.use(VueRouter)
+
 Vue.filter('state', (value, dirtyOnly = true) => {
   if (dirtyOnly) {
     if (!value.$dirty)

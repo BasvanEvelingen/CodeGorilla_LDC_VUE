@@ -106,7 +106,6 @@ export default {
       password_confirmation: ""
     };
   },
-  /* vuelidate validatie van formulier */
   validations: {
     username: { required, minLength: minLength(6) },
     email: { required, email },

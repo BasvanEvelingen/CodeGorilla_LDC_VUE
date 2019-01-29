@@ -2,7 +2,7 @@
   <div class="app flex-row align-items-center ldc-background">
     <div class="container">
       <b-row class="justify-content-center">
-        <b-col md="8">
+        <b-col md="6" sm="8">
           <b-img class="ldc-picture" :src="'/images/ldc_cglogo.svg'"/>
           <b-card-group>
             <b-card no-body class="p-4 rounded-left">
@@ -10,6 +10,7 @@
                 <h1 class="unselectable">Login</h1>
                 <p class="text-muted unselectable">Inloggen op uw account</p>
                 <b-form autocomplete="off" @submit.prevent="login" method="POST">
+                  <!-- Gebruikersemail -->
                   <b-input-group class="mb-3">
                     <b-input-group-prepend>
                       <b-input-group-text>
@@ -24,8 +25,13 @@
                       placeholder="Uw email"
                       required
                     />
-                    <b-form-invalid-feedback class="unselectable">Vereist</b-form-invalid-feedback>
+                    <span
+                      v-if="$v.$dirty && $v.email.$invalid"
+                      class="error-message"
+                    >{{emailErrorMessage}}</span>
                   </b-input-group>
+
+                  <!-- wachtwoord -->
                   <b-input-group class="mb-4">
                     <b-input-group-prepend>
                       <b-input-group-text>
@@ -78,7 +84,7 @@
 </template>
 
 <script>
-import { required } from "validators";
+import { email, required } from "vuelidate/lib/validators";
 
 export default {
   data() {
@@ -87,13 +93,9 @@ export default {
       password: null
     };
   },
-  validations() {
-    return {
-      form: {
-        username: { required },
-        password: { required }
-      }
-    };
+  validations: {
+    username: { required },
+    password: { required }
   },
   methods: {
     login() {
