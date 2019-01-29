@@ -1,91 +1,55 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 
-// Containers
-import Full from '@/containers/Full'
+// Pages
+import Home from '../../pages/Home'
+import Register from '../../pages/Register'
+import Login from '../../pages/Login'
+import Dashboard from '../../pages/user/Dashboard'
+import AdminDashboard from '../../pages/admin/Dashboard'
 
-// Views
-import Dashboard from '@/views/sample/Dashboard'
-
-// Views - Pages
-import Page404 from '@/views/pages/Page404'
-import Page500 from '@/views/pages/Page500'
-import Login from '@/views/pages/Login'
-import RegisterForm from '@/views/pages/RegisterForm'
-
-// Sample route
-import sample from './sample'
-
-Vue.use(Router)
-
-export default new Router({
-  mode           : 'history',
-  linkActiveClass: 'open active',
-  scrollBehavior : () => ({ y: 0 }),
-  routes         : [
-    {
-      path     : '/',
-      name     : 'home',
-      component: 'Home',
-      meta     : { auth: undefined },
-    },
-    {
-      path     : '/dashboard',
-      name     : 'dashboard',
-      component: Full,
-      children : [
-        {
-          path     : 'dashboard',
-          name     : 'Dashboard',
-          component: Dashboard,
-        },
-        ...sample,
-      ],
-    },
-    {
-      path     : '/admin',
-      name     : 'admin.dashboard',
-      component: 'AdminDashboard',
-      meta     : {
-        auth: {
-          roles            : 2, redirect         : { name: 'login' }, forbiddenRedirect: '/403',
-        },
+// Routes
+const routes = [
+  {
+    path     : '/',
+    name     : 'home',
+    component: Home,
+    meta     : { auth: undefined },
+  },
+  {
+    path     : '/register',
+    name     : 'register',
+    component: Register,
+    meta     : { auth: false },
+  },
+  {
+    path     : '/login',
+    name     : 'login',
+    component: Login,
+    meta     : { auth: false },
+  },
+  // USER ROUTES
+  {
+    path     : '/dashboard',
+    name     : 'user.dashboard',
+    component: Dashboard,
+    meta     : { auth: true },
+  },
+  // ADMIN ROUTES
+  {
+    path     : '/admin',
+    name     : 'admin.dashboard',
+    component: AdminDashboard,
+    meta     : {
+      auth: {
+        roles            : 2, redirect         : { name: 'login' }, forbiddenRedirect: '/403',
       },
-
     },
-    {
-      path     : '/pages',
-      redirect : '/pages/404',
-      name     : 'Pages',
-      component: { render (c) { return c('router-view') } },
-      children : [
-        {
-          path     : '404',
-          name     : 'Page404',
-          component: Page404,
-        },
-        {
-          path     : '500',
-          name     : 'Page500',
-          component: Page500,
-        },
-        {
-          path     : '/login',
-          name     : 'Login',
-          component: Login,
-          meta     : { auth: false },
-        },
-        {
-          path     : '/register',
-          name     : 'register',
-          component: RegisterForm,
-        },
-      ],
-    },
-    {
-      path     : '*',
-      name     : '404',
-      component: Page404,
-    },
-  ],
+  },
+]
+const router = new VueRouter({
+  history: true,
+  mode   : 'history',
+  routes,
 })
+
+export default router

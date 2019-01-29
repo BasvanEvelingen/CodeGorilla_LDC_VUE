@@ -15,8 +15,9 @@ import Sweetalert from 'vue-sweetalert2'
 import Vuelidate from 'vuelidate'
 import Loading from './components/Loading'
 import Select2 from './components/Select'
-import App from './App'
-import router from './router'
+// import App from './App'
+import Index from '../Index'
+import router from './core_router'
 import store from './store'
 
 Vue.use(BootstrapVue)
@@ -57,6 +58,6 @@ export default new Vue({
   el        : '#app',
   router    : router,
   store     : store,
-  components: { App },
-  template  : '<App/>',
+  components: { Index },
+  template  : '<Index />',
 })
