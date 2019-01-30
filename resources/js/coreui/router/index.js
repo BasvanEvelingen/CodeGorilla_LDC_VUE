@@ -4,8 +4,9 @@ import VueRouter from 'vue-router'
 import Home from '../../pages/Home'
 import Register from '../../pages/Register'
 import Login from '../../pages/Login'
-import Dashboard from '../../pages/user/Dashboard'
+// import Dashboard from '../../pages/user/Dashboard'
 import AdminDashboard from '../../pages/admin/Dashboard'
+import LDC from '../containers/LDC'
 
 // Routes
 const routes = [
@@ -31,7 +32,7 @@ const routes = [
   {
     path     : '/dashboard',
     name     : 'user.dashboard',
-    component: Dashboard,
+    component: LDC,
     meta     : { auth: true },
   },
   // ADMIN ROUTES

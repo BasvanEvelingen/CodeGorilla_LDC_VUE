@@ -4,6 +4,7 @@
       <b-row class="justify-content-center">
         <b-col md="6" sm="8">
           <b-img class="ldc-picture" :src="'/images/ldc_cglogo.svg'"/>
+          <b-loading variant="Stretch" background="#00AEEF" id="spinner" cover></b-loading>
           <b-card no-body class="mx-4 rounded">
             <b-card-body class="p-4">
               <h1 class="unselectable">Registreren</h1>
@@ -33,7 +34,7 @@
                   <b-input-group-prepend>
                     <b-input-group-text class="unselectable">@</b-input-group-text>
                   </b-input-group-prepend>
-                  <b-input type="email" v-model="email" class="form-control" placeholder="Email"/>
+                  <b-input type="text" v-model="email" class="form-control" placeholder="Email"/>
                   <span
                     v-if="$v.$dirty && $v.email.$invalid"
                     class="error-message"
@@ -97,14 +98,17 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { email, required, sameAs, minLength } from "vuelidate/lib/validators";
+import * as Spinner from "vue-loading-spinner";
 
 export default {
   data() {
     return {
-      username: null,
-      email: null,
-      password: null,
-      password_confirmation: null
+      username: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
+      isLoading: false,
+      variants: _.keys(Spinner)
     };
   },
   validations: {
@@ -134,9 +138,9 @@ export default {
       }
     },
     passwordConfirmationErrorMessage() {
-      if (!this.$v.passwordConfirmation.required) {
+      if (!this.$v.password_confirmation.required) {
         return "Bevestigen van wachtwoord is vereist.";
-      } else if (!this.$v.passwordConfirmation.sameAs) {
+      } else if (!this.$v.password_confirmation.sameAs) {
         return "Wachtwoorden komen niet overeen.";
       }
     }
@@ -227,7 +231,12 @@ export default {
 
 .error-message {
   color: #ff4119;
+
   font-size: 11px;
   margin: 5px 0 0 5px;
+}
+
+#spinner::after {
+  background: #c7254e !important;
 }
 </style>

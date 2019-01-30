@@ -20,7 +20,7 @@
     </li>
     <!-- uitloggen -->
     <li class="nav-item" v-if="$auth.check()">
-      <a class="nav_link" href="#" @click.prevent="$auth.logout()">Logout</a>
+      <a class="nav_link" href="#" @click.prevent="$auth.logout()">Uitloggen</a>
     </li>
   </ul>
 </template>
