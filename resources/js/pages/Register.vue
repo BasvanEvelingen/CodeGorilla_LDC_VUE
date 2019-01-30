@@ -3,6 +3,7 @@
     <div class="container">
       <b-row class="justify-content-center">
         <b-col md="6" sm="8">
+          <b-img class="ldc-picture" :src="'/images/ldc_cglogo.svg'"/>
           <b-card no-body class="mx-4 rounded">
             <b-card-body class="p-4">
               <h1 class="unselectable">Registreren</h1>

@@ -67,6 +67,7 @@ export default {
 
 <style scoped>
 .nav_link {
-  font-size: 2rem;
+  font-size: 1rem;
+  margin-right: 10px;
 }
 </style>

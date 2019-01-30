@@ -1,5 +1,5 @@
 <template>
-  <div class="app flex-row align-items-center ldc-background">
+  <div class="app flex-row align-items-center">
     <div class="container">
       <b-row class="justify-content-center">
         <b-col md="6" sm="8">
@@ -9,7 +9,7 @@
               <b-card-body>
                 <h1 class="unselectable">Login</h1>
                 <p class="text-muted unselectable">Inloggen op uw account</p>
-                <b-form autocomplete="off" @submit.prevent="login" method="POST">
+                <form autocomplete="off" @submit.prevent="login" method="POST">
                   <!-- Gebruikersemail -->
                   <b-input-group class="mb-3">
                     <b-input-group-prepend>
@@ -49,10 +49,10 @@
                   </b-input-group>
                   <b-row>
                     <b-col cols="6">
-                      <b-button variant="primary" class="px-4" @click="submit">Inloggen</b-button>
+                      <b-button type="submit" variant="primary" class="px-4">Inloggen</b-button>
                     </b-col>
                   </b-row>
-                </b-form>
+                </form>
               </b-card-body>
             </b-card>
             <b-card
@@ -139,16 +139,6 @@ export default {
 </script>
 
 <style scoped>
-.ldc-background {
-  background-image: linear-gradient(
-    to top,
-    #d5d4d0 0%,
-    #d5d4d0 1%,
-    #eeeeec 31%,
-    #efeeec 75%,
-    #e9e9e7 100%
-  );
-}
 .ldc-picture {
   user-select: none;
   -moz-user-select: none;
