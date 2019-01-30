@@ -86,12 +86,12 @@ import { email, required } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
-      email: null,
-      password: null
+      email: "",
+      password: ""
     };
   },
   validations: {
-    username: { required },
+    email: { required },
     password: { required }
   },
   computed: {
@@ -124,7 +124,7 @@ export default {
             ? redirect.from.name
             : this.$auth.user().role === 2
             ? "admin.dashboard"
-            : "dashboard";
+            : "user.dashboard";
           this.$router.push({ name: redirectTo });
         },
         error: function() {
@@ -155,5 +155,12 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.error-message {
+  color: #ff4119;
+
+  font-size: 11px;
+  margin: 5px 0 0 5px;
 }
 </style>

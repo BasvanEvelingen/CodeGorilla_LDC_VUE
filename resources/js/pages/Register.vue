@@ -1,5 +1,12 @@
 <template>
   <div class="app flex-row align-items-center">
+    <loading
+      :active.sync="isLoading"
+      :can-cancel="true"
+      :on-cancel="onCancel"
+      color="#FF4119"
+      :is-full-page="fullPage"
+    ></loading>
     <div class="container">
       <b-row class="justify-content-center">
         <b-col md="6" sm="8">
@@ -98,16 +105,20 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { email, required, sameAs, minLength } from "vuelidate/lib/validators";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
+  components: {
+    Loading
+  },
   data() {
     return {
       username: "",
       email: "",
       password: "",
       password_confirmation: "",
-      isLoading: false,
-      variants: _.keys(Spinner)
+      isLoading: false
     };
   },
   validations: {
@@ -151,6 +162,7 @@ export default {
       if (this.$v.$invalid) {
         this.sAlert();
       } else {
+        this.isLoading = true;
         this.$auth.register({
           data: {
             email: this.email,
@@ -158,6 +170,7 @@ export default {
             password_confirmation: this.password_confirmation
           },
           success: function() {
+            this.isLoading = false;
             this.success = true;
             this.$router.push({
               name: "login",
@@ -233,9 +246,5 @@ export default {
 
   font-size: 11px;
   margin: 5px 0 0 5px;
-}
-
-#spinner::after {
-  background: #c7254e !important;
 }
 </style>
