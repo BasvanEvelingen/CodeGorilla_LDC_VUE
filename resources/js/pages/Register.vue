@@ -4,7 +4,7 @@
       <b-row class="justify-content-center">
         <b-col md="6" sm="8">
           <b-img class="ldc-picture" :src="'/images/ldc_cglogo.svg'"/>
-          <b-loading variant="Stretch" background="#00AEEF" id="spinner" cover></b-loading>
+
           <b-card no-body class="mx-4 rounded">
             <b-card-body class="p-4">
               <h1 class="unselectable">Registreren</h1>
@@ -98,7 +98,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { email, required, sameAs, minLength } from "vuelidate/lib/validators";
-import * as Spinner from "vue-loading-spinner";
 
 export default {
   data() {
