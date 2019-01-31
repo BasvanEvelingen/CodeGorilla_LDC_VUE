@@ -31,12 +31,12 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-Route::group(['middleware' => 'auth:api'], function(){
+Route::group(['middleware' => 'auth:api'], function () {
     //Users
     Route::get('users', 'UserController@index')->middleware('isAdmin');
     Route::get('users/{id}', 'UserController@show')->middleware('isAdminOrSelf');
     Route::get('surveys', 'SurveysController@getSurveys')->middleware('isAdmin');
     Route::post('surveys', 'SurveysController@storeSurvey')->middleware('isAdminOrSelf');
-    Route::get('questions', 'QuestionsController@getQuestions')->middleware('isAdminOrSelf');
-    
+    Route::get('questions', 'QuestionsController@getQuestions')->middleware('isAdminOrUser');
+
 });

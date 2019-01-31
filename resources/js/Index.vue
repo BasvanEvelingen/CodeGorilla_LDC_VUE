@@ -1,6 +1,6 @@
 <template>
-  <b-container fluid>
-    <b-nav class="navbar navbar-expand-sm navbar-custom fixed-top">
+  <b-container>
+    <b-nav class="navbar navbar-expand-sm py-0 py-md0 navbar-custom fixed-top">
       <button
         class="navbar-toggler"
         type="button"
@@ -10,18 +10,22 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span class="navbar-toggler-icon"></span>
+        <span>
+          <i class="fa fa-bars fa-1x icolor"></i>
+        </span>
       </button>
-      
-      <a class="navbar-brand" href="#">
-        <b-img class="ldc-picture" :src="'/images/logo.png'" height="35px"/>
-      </a>
+
+      <router-link :to="{ path: '/' }">
+        <a class="navbar-brand">
+          <b-img class="ldc-picture" :src="'/images/logo.png'" height="30px"/>
+        </a>
+      </router-link>
 
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <navigationMenu></navigationMenu>
       </div>
     </b-nav>
-    <b-row no-gutters>
+    <b-row>
       <b-col>
         <router-view/>
       </b-col>
@@ -56,5 +60,10 @@ export default {
 .navbar-custom {
   background-color: #e6eced;
   border-color: #e7e7e7;
+  border-bottom: 1px solid #00aeef;
+}
+
+.icolor {
+  color: #548299;
 }
 </style>

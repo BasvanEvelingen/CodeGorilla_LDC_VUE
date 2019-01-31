@@ -15,7 +15,9 @@ class CreateSurveysTable extends Migration
         if (!Schema::hasTable('surveys')) {
             Schema::create('surveys', function (Blueprint $table) {
                 $table->increments('id');
-                $table->longtext('ldc_survey');
+                $table->string('name');
+                $table->integer('user_id')->unsigned();
+                $table->longtext('survey');
                 $table->timestamps();
                 $table->softDeletes();
                 $table->index(['deleted_at']);

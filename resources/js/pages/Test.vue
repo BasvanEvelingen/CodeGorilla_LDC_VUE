@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import QuestionComponent from "./Question.vue";
+import QuestionComponent from "../components/Question.vue";
 import axios from "axios";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
@@ -31,7 +31,7 @@ export default {
     getQuestions() {
       this.isLoading = true;
       axios
-        .get("/api/questions")
+        .get("/questions")
         .then(({ data }) => {
           let apiquestions = data["responses"][0]["objects"];
           for (var i in apiquestions) {

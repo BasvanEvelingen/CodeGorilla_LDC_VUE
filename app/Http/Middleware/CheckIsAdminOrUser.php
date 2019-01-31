@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
-class CheckIsAdminOrSelf
+class CheckIsAdminOrUser
 {
     /**
      * Handle an incoming request.
@@ -16,11 +15,9 @@ class CheckIsAdminOrSelf
      */
     public function handle($request, Closure $next)
     {
-        $requestedUserId = $request->route()->parameter('id');
 
         if (
-            Auth::user()->role === 2 || Auth::user()->id == $requestedUserId
-        ) {
+            Auth::user()->role === 1 || Auth::user()->role === 2) {
             return $next($request);
         } else {
             return response()->json(['error' => 'Niet bevoegd'], 403);

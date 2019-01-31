@@ -4,9 +4,11 @@ import VueRouter from 'vue-router'
 import Home from '../../pages/Home'
 import Register from '../../pages/Register'
 import Login from '../../pages/Login'
-// import Dashboard from '../../pages/user/Dashboard'
+import Dashboard from '../../pages/user/Dashboard'
 import AdminDashboard from '../../pages/admin/Dashboard'
-import LDC from '../containers/LDC'
+import Test from '../../pages/Test'
+
+// import LDC from '../containers/LDC'
 
 // Routes
 const routes = [
@@ -32,7 +34,13 @@ const routes = [
   {
     path     : '/dashboard',
     name     : 'user.dashboard',
-    component: LDC,
+    component: Dashboard,
+    meta     : { auth: true },
+  },
+  {
+    path     : '/test',
+    name     : 'test',
+    component: Test,
     meta     : { auth: true },
   },
   // ADMIN ROUTES
