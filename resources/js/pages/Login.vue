@@ -1,6 +1,13 @@
 <template>
   <div class="app flex-row align-items-center">
     <div class="container">
+      <loading
+        :active.sync="isLoading"
+        :can-cancel="true"
+        :on-cancel="onCancel"
+        color="#FF4119"
+        :is-full-page="fullPage"
+      ></loading>
       <b-row class="justify-content-center">
         <b-col md="6" sm="8">
           <b-img class="ldc-picture" :src="'/images/ldc_cglogo.svg'"/>
@@ -82,12 +89,18 @@
 <script>
 import Swal from "sweetalert2";
 import { email, required } from "vuelidate/lib/validators";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
+  components: {
+    Loading
+  },
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
+      isLoading: false
     };
   },
   validations: {
@@ -113,6 +126,7 @@ export default {
       this.$v.$touch();
       var redirect = this.$auth.redirect();
       var app = this;
+      this.isLoading = true;
       this.$auth.login({
         params: {
           email: app.email,
@@ -120,6 +134,7 @@ export default {
         },
         success: function() {
           // handle redirection
+          this.isLoading = false;
           const redirectTo = redirect
             ? redirect.from.name
             : this.$auth.user().role === 2

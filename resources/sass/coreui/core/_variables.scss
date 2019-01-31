@@ -4,10 +4,19 @@
 
 $enable-sidebar-nav-rounded: false !default;
 
-$border-color: $gray-200 !default;
+$border-color: #E6ECED !default;
 $layout-transition-speed: 0.25s !default;
 
+//LDC Colors
+
+$ldc_red: #ff4119;
+$ldc_grey: #e6eced;
+$ldc_blue: #00aeef;
+$ldc_dark_blue: #548299;
+$ldc_grey_blue: #7d98a0;
+
 // Social Colors
+
 
 $facebook: #3b5998 !default;
 $twitter: #00aced !default;
@@ -48,7 +57,7 @@ $navbar-border: (
   )
 ) !default;
 $navbar-brand-width: 155px !default;
-$navbar-brand-bg: #fff !default;
+$navbar-brand-bg: #E6ECED !default;
 $navbar-brand-logo: url('~static/img/logo.png') !default;
 $navbar-brand-logo-size: 70px auto !default;
 $navbar-brand-border: (
@@ -82,14 +91,14 @@ $sidebar-minimized-height: $sidebar-minimized-width !default;
 $sidebar-compact-width: 150px !default;
 $sidebar-compact-height: $sidebar-compact-width !default;
 $sidebar-color: #fff !default;
-$sidebar-bg: $gray-800 !default;
+$sidebar-bg: $ldc_grey !default;
 $sidebar-borders: none !default;
 $mobile-sidebar-width: 220px !default;
 
 // Sidebar Header
 
 $sidebar-header-height: auto !default;
-$sidebar-header-bg: rgba(0, 0, 0, 0.2) !default;
+$sidebar-header-bg:#E6ECED !default;
 $sidebar-header-padding-y: 0.75rem !default;
 $sidebar-header-padding-x: 1rem !default;
 
@@ -188,7 +197,7 @@ $breadcrumb-borders: (
 // Aside
 
 $aside-menu-width: 250px !default;
-$aside-menu-color: $gray-800 !default;
+$aside-menu-color: $ldc_grey !default;
 $aside-menu-bg: #fff !default;
 $aside-menu-borders: (
   left: (

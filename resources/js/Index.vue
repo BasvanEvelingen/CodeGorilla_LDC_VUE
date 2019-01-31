@@ -1,6 +1,6 @@
 <template>
-  <b-container>
-    <b-nav class="navbar navbar-expand-sm navbar-light bg-light shadow fixed-top">
+  <b-container fluid>
+    <b-nav class="navbar navbar-expand-sm navbar-custom fixed-top">
       <button
         class="navbar-toggler"
         type="button"
@@ -21,15 +21,11 @@
         <navigationMenu></navigationMenu>
       </div>
     </b-nav>
-    <header class="masthead">
-      <div class="container h-100">
-        <div class="row h-100 align-items-center">
-          <div class="col-12 text-center">
-            <router-view/>
-          </div>
-        </div>
-      </div>
-    </header>
+    <b-row no-gutters>
+      <b-col>
+        <router-view/>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -55,5 +51,10 @@ export default {
   -webkit-user-select: none;
   -ms-user-select: none;
   pointer-events: none;
+}
+
+.navbar-custom {
+  background-color: #e6eced;
+  border-color: #e7e7e7;
 }
 </style>

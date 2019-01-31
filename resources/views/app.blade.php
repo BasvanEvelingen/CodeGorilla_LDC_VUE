@@ -24,7 +24,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" class="container-fluid">
         <noscript>
             <div class="app flex-row align-items-center">
                 <div class="container">

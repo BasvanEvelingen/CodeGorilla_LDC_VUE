@@ -45,14 +45,14 @@ export default {
         // gebruiker ingelogd
         user: [
           {
-            name: "Dashboard",
+            name: "Hoofdmenu",
             path: "user.dashboard"
           }
         ],
         // beheerder ingelogd
         admin: [
           {
-            name: "Dashboard",
+            name: "Hoofdmenu",
             path: "admin.dashboard"
           }
         ]

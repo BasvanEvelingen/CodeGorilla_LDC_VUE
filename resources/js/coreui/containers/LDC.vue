@@ -1,12 +1,13 @@
 <template>
   <div class="app">
-    <app-header/>
+    <!--<app-header/>-->
+    s
     <div class="app-body">
       <sidebar :nav-items="nav"/>
       <notifications :style="{ 'margin-top': offset }" class="custom-notifications"/>
       <main class="main">
         <breadcrumb :list="list"/>
-        <div class="container-fluid">
+        <div class="container-fluid canvas">
           <router-view/>
         </div>
       </main>
@@ -66,3 +67,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.canvas {
+  width: 100%;
+}
+</style>

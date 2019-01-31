@@ -231,6 +231,16 @@ export default {
 
 <!-- alleen stijl voor dit component -->
 <style scoped>
+/* niet kunnen selecteren en verslepen logo */
+.ldc-picture {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+}
+
 /* niet kunnen selecteren van tekst */
 .unselectable {
   -webkit-touch-callout: none;

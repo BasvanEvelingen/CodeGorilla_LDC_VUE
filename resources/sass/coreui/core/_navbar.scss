@@ -1,7 +1,7 @@
 .app-header.navbar {
   @include borders($navbar-border);
 
-  background-color: $navbar-bg;
+  // background-color: $navbar-bg;
   flex-direction: row;
   height: $navbar-height;
   margin: 0;
@@ -111,7 +111,7 @@
 }
 
 .navbar-divider {
-  background-color: rgba(0, 0, 0, 0.075);
+  background-color: $ldc_grey;
 }
 
 @include media-breakpoint-up(lg) {
