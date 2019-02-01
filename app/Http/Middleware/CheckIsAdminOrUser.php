@@ -5,6 +5,11 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @author Bas van Evelingen <BasvanEvelingen@me.com>
+ *  Class for checking if user is an authenticated user that being either
+ *  an common user or an administrator
+ */
 class CheckIsAdminOrUser
 {
     /**

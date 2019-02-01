@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import QuestionComponent from "../components/Question.vue";
+import QuestionComponent from "../components/QuestionSlider.vue";
 import axios from "axios";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
@@ -24,7 +24,8 @@ export default {
       currentQuestion: 0,
       question: { id: "", name: "", antwoord: 0 },
       deltaQuestions: [],
-      isLoading: false
+      isLoading: false,
+      atStart: false
     };
   },
   methods: {
@@ -48,7 +49,6 @@ export default {
         .catch(error => console.log(error));
     },
     storeQuestions() {
-      console.log("storeQuestions");
       this.isLoading = true;
       var json_questions = [];
       for (let i = 0; i < this.questions.length; i++) {
@@ -60,13 +60,9 @@ export default {
         };
         json_questions.push(question_obj);
       }
-      //= JSON.stringify(json_questions);
-      //console.log("jsonstring: " + json_questions);
-
       axios
         .post("/questions", json_questions)
         .then(({ data }) => {
-          console.log("data die opgeslagen is: " + data);
           this.isLoading = false;
         })
         .catch(function(error) {
@@ -114,7 +110,7 @@ export default {
         this.currentQuestion++;
         this.question = this.questions[this.currentQuestion];
       }
-      if (this.checkAnswersChanged()) this.storeQuestions();
+      this.storeQuestions();
     },
     logQuestionArrays() {
       for (let i = 0; i < this.questions.length; i++) {

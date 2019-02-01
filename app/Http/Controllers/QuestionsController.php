@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
+use DateTime;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use App\Survey;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionsController extends Controller
 {
@@ -78,7 +80,16 @@ class QuestionsController extends Controller
      */
     public function storeQuestions(Request $request) {
 
-        
+        $user = Auth::user();
+        $username = $user->name;
+        $date = new DateTime();
+        $survey = new Survey();
+        $survey->name = $username . $date->getTimestamp();
+        $survey->user_id = $user->id;
+        $survey->survey =  json_encode($request->json());
+        $survey->save();
+
+        dd(json_decode($request->getContent(), true));
     }
 
 

@@ -7,7 +7,7 @@ use Closure;
 /**
  * @author Bas van Evelingen <BasvanEvelingen@me.com>
  * @version 1.0
- * Class for authentication user by role, see if they are allowed to access certain routes 
+ * Class for authentication user by role, see if they are allowed to access certain routes
  * in application
  */
 class Authenticate
@@ -22,7 +22,7 @@ class Authenticate
     public function handle($request, Closure $next, ...$guards)
     {
         if ($this->authenticate($request, $guards) === 'authentication_error') {
-            return response()->json(['error' => 'Onbevoegd']);
+            return response()->json(['error' => 'Niet Bevoegd']);
         }
         return $next($request);
     }
