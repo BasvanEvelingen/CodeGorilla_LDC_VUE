@@ -3,22 +3,20 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Request;
+use App\Survey;
 
 class QuestionsController extends Controller
 {
-    // Resource functions
 
-    /**
-     * API for Vue.js
-     * path /questions
-     *
-     */
+   /**
+    * Testing method for making API call currently not in routes
+    *   
+    * @return $reponse in json
+    */
     public function index()
     {
-
-        //testing off/on
         $offline = true;
         switch ($offline) {
             case false:
@@ -39,27 +37,18 @@ class QuestionsController extends Controller
                 $response = Storage::disk('local')->get('ldc_samplequestions');
                 break;
         }
-        dd($response);
         return response($response, Response::HTTP_OK);
     }
 
-    public function store(Request $request)
-    {
-
-    }
-
-    public function update(Request $request)
-    {
-
-    }
-
-    public function destroy($id)
-    {
-
-    }
-
-    // Helper functions
-    private function getQuestions()
+    /**
+     * API
+     * Intermediate function for getting data from RESTFUL API 
+     * Sending it over with another API request from front-end vue.js
+     * Both async/promise based. Guzzle on this back-end and Axios on Vue.js front-end
+     * Sends POST request and receives GET request from front-end
+     * @return $response in json format 
+     */
+    public function getQuestions()
     {
         // get api-call bodydata from json file
         $json = Storage::disk('local')->get('ldc_getquestions.json');
@@ -76,11 +65,26 @@ class QuestionsController extends Controller
             }
         );
         $response = $promise->wait();
-        // give questions to view for testing
-        //return view('questions')->with('data', json_decode($response, true));
-        // give questions to vue.js component
         return $response;
     }
+
+    /**
+     * API
+     * Intermediate function for getting data front end and storing it on the back-end
+     * Sending it over from front-end vue.js and storing it in database, after each call
+     * Both async/promise based. Guzzle on this back-end and Axios on Vue.js front-end
+     * Stores data and receives POST request from front-end
+     * @return $response in json format what has been stored 
+     */
+    public function storeQuestions(Request $request) {
+
+        
+    }
+
+
+
+
+
 
     private function createSurvey($rawresponse)
     {
@@ -104,9 +108,9 @@ class QuestionsController extends Controller
 
     }
 
-    private function storeSurvey($survey)
+    public function storeSurvey(Request $request)
     {
-        dd($survey);
+        
     }
 
     public function getProfessionLevels()

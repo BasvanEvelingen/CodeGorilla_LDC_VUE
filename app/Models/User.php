@@ -6,6 +6,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+/**
+ * Undocumented class
+ */
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
@@ -28,6 +31,11 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    /**
+     * Passing on the Java Web Token
+     *
+     * @return void
+     */
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -37,4 +45,13 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    /**
+     * Defining many to many relationship with model Survey
+     */
+    public function survey()
+    {
+        return $this->belongsToMany('App\Survey');
+    }
+
 }

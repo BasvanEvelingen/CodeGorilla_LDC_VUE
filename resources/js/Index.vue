@@ -25,11 +25,13 @@
         <navigationMenu></navigationMenu>
       </div>
     </b-nav>
-    <b-row>
-      <b-col>
-        <router-view/>
-      </b-col>
-    </b-row>
+    <b-container class="mt-5">
+      <b-row>
+        <b-col>
+          <router-view/>
+        </b-col>
+      </b-row>
+    </b-container>
   </b-container>
 </template>
 

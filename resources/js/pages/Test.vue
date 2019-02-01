@@ -61,12 +61,12 @@ export default {
         json_questions.push(question_obj);
       }
       //= JSON.stringify(json_questions);
-      console.log("jsonstring: " + json_questions);
+      //console.log("jsonstring: " + json_questions);
 
       axios
-        .post("/api/questions", json_questions)
+        .post("/questions", json_questions)
         .then(({ data }) => {
-          console.log(data);
+          console.log("data die opgeslagen is: " + data);
           this.isLoading = false;
         })
         .catch(function(error) {
