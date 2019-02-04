@@ -13,9 +13,6 @@
         :interval="2000"
         img-width="480"
         img-height="480"
-        v-model="slide"
-        @sliding-start="onSlideStart"
-        @sliding-end="onSlideEnd"
       >
         <!-- Afbeelding 1 -->
         <b-carousel-slide>
@@ -97,9 +94,7 @@ export default {
     return {
       value: 50,
       publicPath: process.env.BASE_URL,
-      imagenumber: "",
-      slide: 0,
-      sliding: null
+      imagenumber: ""
     };
   },
   methods: {
@@ -111,12 +106,6 @@ export default {
     },
     updateRange() {
       this.question.antwoord = this.value;
-    },
-    onSlideStart(slide) {
-      this.sliding = true;
-    },
-    onSlideEnd(slide) {
-      this.sliding = false;
     }
   },
   props: ["question"]

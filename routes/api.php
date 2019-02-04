@@ -35,9 +35,19 @@ Route::group(['middleware' => 'auth:api'], function () {
     //Users
     Route::get('users', 'UserController@index')->middleware('isAdmin');
     Route::get('users/{id}', 'UserController@show')->middleware('isAdminOrSelf');
-    Route::get('surveys', 'SurveysController@getSurveys')->middleware('isAdmin');
-    Route::post('surveys', 'SurveysController@storeSurvey')->middleware('isAdminOrSelf');
+    //Questions from API
     Route::get('questions', 'QuestionsController@getQuestions')->middleware('isAdminOrUser');
+    //Surveys
+    Route::get('surveys', 'SurveysController@indexSurveys')->middleware('isAdmin');
+    Route::get('surveys/{id}', 'SurveysController@getSurvey')->middleware('isAdminOrSelf');
     Route::post('surveys', 'SurveysController@storeSurvey')->middleware('isAdminOrUser');
     Route::put('surveys/{id}', 'SurveysController@updateSurvey')->middleware('isAdminOrUser');
+    Route::delete('surveys/{id}', 'SurveysController@deleteSurvey')->middleware('isAdmin');
+    //Survey_Details
+    Route::get('surveyDetail', 'SurveyDetailsController@indexSurveyDetails')->middleware('isAdminOrSelf');
+    Route::get('surveyDetail/{id}', 'SurveyDetailsController@getSurveyDetail')->middleware('isAdminOrSelf');
+    Route::post('surveyDetail', ' SurveyDetailsController@storeSurveyDetail')->middleware('isAdmin');
+    Route::put('surveyDetail', ' SurveyDetailsController@updateSurveyDetail')->middleware('isAdminOrSelf');
+    Route::delete('surveyDetail/{id}', 'SurveyDetailsController@deleteSurveyDetail')->middleware('isAdmin');
+
 });

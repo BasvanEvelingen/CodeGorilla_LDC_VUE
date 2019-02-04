@@ -15,9 +15,6 @@
         :interval="2000"
         img-width="480"
         img-height="480"
-        v-model="slide"
-        @sliding-start="onSlideStart"
-        @sliding-end="onSlideEnd"
       >
         <!-- Afbeelding 1 -->
         <b-carousel-slide>
@@ -114,12 +111,6 @@ export default {
     },
     updateRange() {
       this.question.antwoord = this.value * 10;
-    },
-    onSlideStart(slide) {
-      this.sliding = true;
-    },
-    onSlideEnd(slide) {
-      this.sliding = false;
     }
   },
   components: {

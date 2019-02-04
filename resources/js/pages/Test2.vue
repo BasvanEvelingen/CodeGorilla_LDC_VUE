@@ -160,7 +160,6 @@ export default {
   mounted() {
     this.isMounted = true;
     this.getQuestions();
-    this.maxlength = questions.length - 1;
   },
   components: { QuestionComponent, Loading }
 };

@@ -10,6 +10,29 @@ use Illuminate\Support\Facades\Auth;
 
 class SurveysController extends Controller
 {
+
+    /**
+     * API GET SURVEY
+     * Gives survey back to user or admin, to get results or to complete a pending survey
+     * @param $id the id of the survey to be given
+     * @return $response gives back survey data
+     * in survey to be updated.
+     */
+    public function getSurvey($id)
+    {
+
+    }
+    /**
+     * API INDEX ALL SURVEYS
+     * Gives all surveys back admin, to get results or to complete a pending survey
+     * @return $response gives back all survey data
+     * in survey to be updated.
+     */
+    public function indexSurveys()
+    {
+
+    }
+
     /**
      * API STORE SURVEY
      * Initializes new survey and stores it in the database
@@ -49,4 +72,16 @@ class SurveysController extends Controller
         $suvey->save();
         return response(null, Response::HTTP_OK);
     }
+
+    /**
+     * API DELETE SURVEY
+     * Destroys a given survey, only admins are allowed to destroy surveys
+     * Should only be used before Survey_Details are destroyed
+     * @param $id , id of the survey to be deleted from database
+     */
+    public function deleteSurvey($id)
+    {
+
+    }
+
 }
