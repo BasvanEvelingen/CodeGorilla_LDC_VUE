@@ -8,6 +8,7 @@
         @prevquestion="prevquestion"
       ></question-component>
     </div>
+    <button class="btn btn_info" v-if="this.completed">Test afronden</button>
   </div>
 </template>
 
@@ -22,8 +23,9 @@ export default {
     return {
       questions: [],
       currentQuestion: 0,
-      question: { id: "", name: "", antwoord: 0 },
+      question: { id: "", name: "", antwoord: "" },
       deltaQuestions: [],
+      completed: false,
       isLoading: false,
       atStart: false
     };
@@ -38,7 +40,7 @@ export default {
           for (var i in apiquestions) {
             this.question.id = apiquestions[i].id;
             this.question.name = apiquestions[i].name;
-            this.question.antwoord = 0;
+            this.question.antwoord = -1;
             this.questions.push(this.question);
             this.question = {};
           }
@@ -98,6 +100,7 @@ export default {
     },
     prevquestion(eventArray) {
       this.updateAnswers(eventArray);
+      this.checkComplete();
       if (this.currentQuestion > 0) {
         this.currentQuestion--;
         this.question = this.questions[this.currentQuestion];
@@ -106,6 +109,7 @@ export default {
     },
     nextquestion(eventArray) {
       this.updateAnswers(eventArray);
+      this.checkComplete();
       if (this.currentQuestion < this.questions.length - 1) {
         this.currentQuestion++;
         this.question = this.questions[this.currentQuestion];
@@ -117,6 +121,29 @@ export default {
         console.log("rquestions: " + this.questions[i].antwoord + "\n");
         console.log("dquestions: " + this.deltaQuestions[i].antwoord + "\n");
         console.log("----------------------");
+      }
+    },
+    checkComplete() {
+      let complete = true;
+      for (let i = 0; i < this.questions.length; i++) {
+        console.log(
+          "questions: " +
+            this.questions[i].id +
+            " :" +
+            this.questions[i].antwoord +
+            "\n"
+        );
+        if (this.questions[i].antwoord == -1) {
+          complete = false;
+          console.log("not completed yet");
+          break;
+        }
+      }
+      if (complete == true) {
+        console.log("completed!!!");
+        this.completed = true;
+      } else {
+        this.completed = false;
       }
     }
   },

@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use DateTime;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Survey;
 use Illuminate\Support\Facades\Auth;
 
 class QuestionsController extends Controller
 {
-
    /**
-    * Testing method for making API call currently not in routes
+    * Testing method for making API call currently not in the routes
     *   
-    * @return $reponse in json
+    * @return $reponse in json format 
     */
     public function index()
     {
@@ -37,6 +37,7 @@ class QuestionsController extends Controller
                 break;
             case true:
                 $response = Storage::disk('local')->get('ldc_samplequestions');
+                dd('$response: '.$response);
                 break;
         }
         return response($response, Response::HTTP_OK);
@@ -49,25 +50,36 @@ class QuestionsController extends Controller
      * Both async/promise based. Guzzle on this back-end and Axios on Vue.js front-end
      * Sends POST request and receives GET request from front-end
      * @return $response in json format 
+     * @var $offline for testing when disconnected from api.
      */
     public function getQuestions()
     {
-        // get api-call bodydata from json file
-        $json = Storage::disk('local')->get('ldc_getquestions.json');
-        // new guzzle instance
-        $client = new Client();
-        $URI = 'https://staging.ldc.nl';
-        $headers = ['Content-Type' => 'application/json'];
-        // try to get questions
-        $promise = $client->requestAsync('POST', $URI, ['headers' => $headers, 'body' => $json])->then(
-            function ($response) {
-                return $response->getBody();
-            }, function ($exception) {
-                return $exception->getMessage();
-            }
-        );
-        $response = $promise->wait();
-        return $response;
+        $offline = true;
+        switch ($offline) {
+            case false:
+                // get api-call bodydata from json file
+                $json = Storage::disk('local')->get('ldc_getquestions.json');
+                // new guzzle instance
+                $client = new Client();
+                $URI = 'https://staging.ldc.nl';
+                $headers = ['Content-Type' => 'application/json'];
+                // try to get questions
+                $promise = $client->requestAsync('POST', $URI, ['headers' => $headers, 'body' => $json])->then(
+                    function ($response) {
+                        return $response->getBody();
+                    }, function ($exception) {
+                        return $exception->getMessage();
+                    }
+                );
+                $response = $promise->wait();
+            break;
+            case true:
+                // no api-call avaiable so we're gonna send some sampledata
+                $response = Storage::disk('local')->get('ldc_samplequestions.json');
+            break;
+        }
+        return response($response, Response::HTTP_OK);
+        
     }
 
     /**
@@ -92,9 +104,7 @@ class QuestionsController extends Controller
         dd(json_decode($request->getContent(), true));
     }
 
-
-
-
+    
 
 
     private function createSurvey($rawresponse)

@@ -1,44 +1,112 @@
 <template>
-  <b-container>
-    <b-card header="<strong>{{this.question.id}}</strong> {{this.question.name}}">
-      <b-card-body></b-card-body>
-      <b-card-footer>
-        <b-form>
-          <b-form-group>
-          
-              <label for="formControlRange">Ik heb zoveel iets met</label>
-              <b-input
-                @change="updateRange"
-                v-model="value"
-                type="range"
-                class="form-control-range"
-                id="formControlRange"
-                min="0"
-                max="100"
-                value="0"
-              >
-        
-          </b-form-group>
+  <div class="md-offset-4">
+    <p>
+      <strong>{{this.question.id}}</strong>
+      {{this.question.name}}
+    </p>
+    <b-row align-h="center">
+      <b-carousel
+        id="carousel"
+        style="text-shadow: 1px 1px 2px #333;"
+        controls
+        indicators
+        background="#E6ECED"
+        :interval="2000"
+        img-width="480"
+        img-height="480"
+        v-model="slide"
+        @sliding-start="onSlideStart"
+        @sliding-end="onSlideEnd"
+      >
+        <!-- Afbeelding 1 -->
+        <b-carousel-slide>
+          <img
+            slot="img"
+            class="d-block img-fluid"
+            width="480"
+            height="480"
+            :src="'/images/questions/' + this.question.id + '-1' + '.jpg'"
+            :alt="this.question.id + '-1.jpg'"
+          >
+        </b-carousel-slide>
+        <!-- Afbeelding 2 -->
+        <b-carousel-slide>
+          <img
+            slot="img"
+            class="d-block img-fluid"
+            width="480"
+            height="480"
+            :src="'/images/questions/' + this.question.id + '-2' + '.jpg'"
+            :alt="this.question.id + '-2.jpg'"
+          >
+        </b-carousel-slide>
+        <!-- Afbeelding 3 -->
+        <b-carousel-slide>
+          <img
+            slot="img"
+            class="d-block img-fluid"
+            width="480"
+            height="480"
+            :src="'/images/questions/' + this.question.id + '-3' + '.jpg'"
+            :alt="this.question.id + '-3.jpg'"
+          >
+        </b-carousel-slide>
+        <!-- Afbeelding 4 -->
+        <b-carousel-slide>
+          <img
+            slot="img"
+            class="d-block img-fluid"
+            width="480"
+            height="480"
+            :src="'/images/questions/' + this.question.id + '-4' + '.jpg'"
+            :alt="this.question.id + '-4.jpg'"
+          >
+        </b-carousel-slide>
+      </b-carousel>
+    </b-row>
 
-          <b-form-group>
-          
-            
-                <!-- <b-input @click="prevquestion" type="button" class="btn btn-primary mr-auto" value="vorige vraag">
-                <b-input @click="nextquestion" type="button" class="btn btn-success" value="volgende vraag">-->
-            
-        
-          </b-form-group>
-        </b-form>
-      </b-card-footer>
-    </b-card>
-  </b-container>
+    <p class="mt-4">
+      Slide #: {{ slide }}
+      <br>
+      Sliding: {{ sliding }}
+    </p>
+
+    <form>
+      <div class="form-group">
+        <label for="formControlRange">Ik heb zoveel iets met</label>
+        <input
+          @change="updateRange"
+          v-model="value"
+          type="range"
+          class="form-control-range"
+          id="formControlRange"
+          min="0"
+          max="100"
+          value="0"
+        >
+      </div>
+      <div class="form-group row">
+        <input
+          @click="prevquestion"
+          type="button"
+          class="btn btn-primary mr-auto"
+          value="vorige vraag"
+        >
+        <input @click="nextquestion" type="button" class="btn btn-success" value="volgende vraag">
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      value: 50
+      value: 50,
+      publicPath: process.env.BASE_URL,
+      imagenumber: "",
+      slide: 0,
+      sliding: null
     };
   },
   methods: {
@@ -50,6 +118,12 @@ export default {
     },
     updateRange() {
       this.question.antwoord = this.value;
+    },
+    onSlideStart(slide) {
+      this.sliding = true;
+    },
+    onSlideEnd(slide) {
+      this.sliding = false;
     }
   },
   props: ["question"]
@@ -57,4 +131,8 @@ export default {
 </script>
 
 <style scoped>
+.carousel {
+  display: block;
+  max-width: 480px;
+}
 </style>

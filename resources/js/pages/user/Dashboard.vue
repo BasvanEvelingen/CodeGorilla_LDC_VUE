@@ -19,7 +19,7 @@
       <b-card header="Uitslagen" title="Kies een uitslag">
         <b-card-body>
           <b-list-group flush>
-            <b-list-group-item>Uitslag Test 1</b-list-group-item>
+            <b-list-group-item>Uitslag Test</b-list-group-item>
             <b-list-group-item>Uitslag Test 2</b-list-group-item>
           </b-list-group>
         </b-card-body>

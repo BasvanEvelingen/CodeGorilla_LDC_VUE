@@ -100,6 +100,8 @@ export default {
     return {
       email: "",
       password: "",
+      onCancel: "",
+      fullPage: "",
       isLoading: false
     };
   },
