@@ -1,9 +1,11 @@
 <template>
   <div class="md-offset-4">
-    <p>
-      <strong>{{this.question.id}}</strong>
-      {{this.question.name}}
-    </p>
+    <b-row align-h="center">
+      <p>
+        <strong>{{this.question.id}}</strong>
+        {{this.question.name}}
+      </p>
+    </b-row>
     <b-row align-h="center">
       <b-carousel
         id="carousel"
@@ -64,42 +66,43 @@
       </b-carousel>
     </b-row>
 
-    <form>
-      <div class="form-group">
-        <label for="formControlRange">Ik heb zoveel iets met</label>
-        <input
-          @change="updateRange"
-          v-model="value"
-          type="range"
-          class="form-control-range"
-          id="formControlRange"
-          min="0"
-          max="100"
-          value="0"
-        >
-      </div>
-      <div class="form-group row">
-        <input
-          @click="prevquestion"
-          type="button"
-          class="btn btn-primary mr-auto"
-          value="vorige vraag"
-        >
-        <input @click="nextquestion" type="button" class="btn btn-success" value="volgende vraag">
-      </div>
-    </form>
+    <br>
+    <b-row align-h="center">
+      <heart-rating
+        :item-size="25"
+        inactive-color="#cc1166"
+        active-color="#ff4119"
+        :increment="0.01"
+        :border-width="3"
+        :spacing="0"
+        :max-rating="10"
+        :show-rating="false"
+        :inline="true"
+        v-model="value"
+      ></heart-rating>
+    </b-row>
+    <br>
+    <b-row align-h="center">
+      <input
+        @click="prevquestion"
+        type="button"
+        class="btn btn-primary btn-marge"
+        value="vorige vraag"
+      >
+      <input @click="nextquestion" type="button" class="btn btn-success" value="volgende vraag">
+    </b-row>
   </div>
 </template>
 
 <script>
+import { HeartRating } from "vue-rate-it";
 export default {
   data() {
     return {
-      value: 50,
+      value: 0,
       publicPath: process.env.BASE_URL,
       imagenumber: "",
-      slide: 0,
-      sliding: null
+      questionnumber: 1
     };
   },
   methods: {
@@ -110,7 +113,7 @@ export default {
       this.$emit("prevquestion", [this.question.id, this.question.antwoord]);
     },
     updateRange() {
-      this.question.antwoord = this.value;
+      this.question.antwoord = this.value * 10;
     },
     onSlideStart(slide) {
       this.sliding = true;
@@ -119,6 +122,10 @@ export default {
       this.sliding = false;
     }
   },
+  components: {
+    HeartRating
+  },
+  computed: {},
   props: ["question"]
 };
 </script>
@@ -127,5 +134,8 @@ export default {
 .carousel {
   display: block;
   max-width: 480px;
+}
+.btn-marge {
+  margin-right: 10px;
 }
 </style>

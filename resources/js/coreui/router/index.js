@@ -7,6 +7,7 @@ import Login from '../../pages/Login'
 import Dashboard from '../../pages/user/Dashboard'
 import AdminDashboard from '../../pages/admin/Dashboard'
 import Test from '../../pages/Test'
+import Test2 from '../../pages/Test2'
 
 // import LDC from '../containers/LDC'
 
@@ -41,6 +42,12 @@ const routes = [
     path     : '/test',
     name     : 'test',
     component: Test,
+    meta     : { auth: true },
+  },
+  {
+    path     : '/test2',
+    name     : 'test2',
+    component: Test2,
     meta     : { auth: true },
   },
   // ADMIN ROUTES

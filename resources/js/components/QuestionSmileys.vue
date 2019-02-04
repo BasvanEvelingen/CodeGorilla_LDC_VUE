@@ -64,38 +64,40 @@
       </b-carousel>
     </b-row>
 
-    <form>
-      <div class="form-group">
-        <label for="formControlRange">Ik heb zoveel iets met</label>
-        <input
-          @change="updateRange"
-          v-model="value"
-          type="range"
-          class="form-control-range"
-          id="formControlRange"
-          min="0"
-          max="100"
-          value="0"
-        >
-      </div>
-      <div class="form-group row">
-        <input
-          @click="prevquestion"
-          type="button"
-          class="btn btn-primary mr-auto"
-          value="vorige vraag"
-        >
-        <input @click="nextquestion" type="button" class="btn btn-success" value="volgende vraag">
-      </div>
-    </form>
+    <br>
+    <b-row align-h="center">
+      <image-rating
+        src="/images/ldc_smiley.png"
+        :item-size="30"
+        inactive-color="#cc1166"
+        active-color="#ff4119"
+        :increment="0.01"
+        :border-width="4"
+        :max-rating="10"
+        :show-rating="false"
+        :inline="true"
+        v-model="value"
+      ></image-rating>
+    </b-row>
+    <br>
+    <b-row align-h="center">
+      <input
+        @click="prevquestion"
+        type="button"
+        class="btn btn-primary btn-marge"
+        value="vorige vraag"
+      >
+      <input @click="nextquestion" type="button" class="btn btn-success" value="volgende vraag">
+    </b-row>
   </div>
 </template>
 
 <script>
+import { Image } from "vue-rate-it";
 export default {
   data() {
     return {
-      value: 50,
+      value: 0,
       publicPath: process.env.BASE_URL,
       imagenumber: "",
       slide: 0,
@@ -110,7 +112,7 @@ export default {
       this.$emit("prevquestion", [this.question.id, this.question.antwoord]);
     },
     updateRange() {
-      this.question.antwoord = this.value;
+      this.question.antwoord = this.value * 10;
     },
     onSlideStart(slide) {
       this.sliding = true;
@@ -119,6 +121,10 @@ export default {
       this.sliding = false;
     }
   },
+  components: {
+    Image
+  },
+  computed: {},
   props: ["question"]
 };
 </script>
@@ -127,5 +133,8 @@ export default {
 .carousel {
   display: block;
   max-width: 480px;
+}
+.btn-marge {
+  margin-right: 10px;
 }
 </style>

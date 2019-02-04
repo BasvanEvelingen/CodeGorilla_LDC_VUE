@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Auth;
 class QuestionsController extends Controller
 {
    /**
+    * API GET INDEX OF QUESTIONS
     * Testing method for making API call currently not in the routes
-    *   
+  
     * @return $reponse in json format 
     */
     public function index()
@@ -44,7 +45,7 @@ class QuestionsController extends Controller
     }
 
     /**
-     * API
+     * API GET QUESTIONS
      * Intermediate function for getting data from RESTFUL API 
      * Sending it over with another API request from front-end vue.js
      * Both async/promise based. Guzzle on this back-end and Axios on Vue.js front-end
@@ -54,7 +55,7 @@ class QuestionsController extends Controller
      */
     public function getQuestions()
     {
-        $offline = true;
+        $offline = false;
         switch ($offline) {
             case false:
                 // get api-call bodydata from json file
@@ -82,58 +83,12 @@ class QuestionsController extends Controller
         
     }
 
-    /**
-     * API
-     * Intermediate function for getting data front end and storing it on the back-end
-     * Sending it over from front-end vue.js and storing it in database, after each call
-     * Both async/promise based. Guzzle on this back-end and Axios on Vue.js front-end
-     * Stores data and receives POST request from front-end
-     * @return $response in json format what has been stored 
+
+      /**
+     * API GET PROFESSION LEVELS
+     * function for obtaining possible professionlevels for generating result of test
+     * @response in json
      */
-    public function storeQuestions(Request $request) {
-
-        $user = Auth::user();
-        $username = $user->name;
-        $date = new DateTime();
-        $survey = new Survey();
-        $survey->name = $username . $date->getTimestamp();
-        $survey->user_id = $user->id;
-        $survey->survey =  json_encode($request->json());
-        $survey->save();
-
-        dd(json_decode($request->getContent(), true));
-    }
-
-    
-
-
-    private function createSurvey($rawresponse)
-    {
-        $response = json_decode($rawresponse);
-        $survey = [];
-
-        foreach ($response->responses[0]->objects as $question) {
-            $storeQuestion = new \stdClass();
-            $storeQuestion->id = $question->id;
-            $storeQuestion->name = $question->name;
-            $storeQuestion->outcome = -1;
-            array_push($survey, $storeQuestion);
-        }
-        $this->storeSurvey($survey);
-    }
-
-    public function sampleTest()
-    {
-        $response = $this->getQuestions();
-        $this->createSurvey($response);
-
-    }
-
-    public function storeSurvey(Request $request)
-    {
-        
-    }
-
     public function getProfessionLevels()
     {
         // get api-call bodydata from json file
@@ -154,22 +109,28 @@ class QuestionsController extends Controller
         // Even wachten op antwoord van server
         $response = $promise->wait();
 
-        return view('levels')->with('data', json_decode($response, true));
+        return response($response, Response::HTTP_OK);
 
     }
 
-    public function postAnswers()
+      /**
+     * API POST ANSWERS
+     * Function for requesting results for given answers, request data is first pulled from table surveys
+     * in database,and then merged with requested professionlevels and then sent over to api
+     * @request in json format what has been stored 
+     * @response also in json format
+     */
+    public function postAnswers(Request $request)
     {
-
         // tijdelijk voorbeeld voor testen
-        $json = Storage::disk('local')->get('ldc_sampleanswers.json');
+        //$request = Storage::disk('local')->get('ldc_sampleanswers.json');
 
         // new guzzle instance
         $client = new Client();
         $URI = 'https://staging.ldc.nl';
         $headers = ['Content-Type' => 'application/json'];
         // try to get levels
-        $promise = $client->requestAsync('POST', $URI, ['headers' => $headers, 'body' => $json])->then(
+        $promise = $client->requestAsync('POST', $URI, ['headers' => $headers, 'body' => $request])->then(
             function ($response) {
                 return $response->getBody();
             }, function ($exception) {
@@ -178,8 +139,7 @@ class QuestionsController extends Controller
         );
         // Even wachten op antwoord
         $response = $promise->wait();
-        //echo $response;
-        // Nu even sturen naar blade, volgende stap vue.js
-        return view('outcome')->with('data', json_decode($response, true));
+       
+        return response($response, Response::HTTP_OK);
     }
 }

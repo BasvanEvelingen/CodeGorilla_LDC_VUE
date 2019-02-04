@@ -38,5 +38,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('surveys', 'SurveysController@getSurveys')->middleware('isAdmin');
     Route::post('surveys', 'SurveysController@storeSurvey')->middleware('isAdminOrSelf');
     Route::get('questions', 'QuestionsController@getQuestions')->middleware('isAdminOrUser');
-    Route::post('questions', 'QuestionsController@storeQuestions')->middleware('isAdminOrUser');
+    Route::post('surveys', 'SurveysController@storeSurvey')->middleware('isAdminOrUser');
+    Route::put('surveys/{id}', 'SurveysController@updateSurvey')->middleware('isAdminOrUser');
 });

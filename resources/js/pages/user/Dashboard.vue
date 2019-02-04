@@ -11,7 +11,11 @@
                 <a>Test 1</a>
               </router-link>
             </b-list-group-item>
-            <b-list-group-item>Test 2</b-list-group-item>
+            <b-list-group-item>
+              <router-link to="test2">
+                <a>Test 2</a>
+              </router-link>
+            </b-list-group-item>
           </b-list-group>
         </b-card-body>
       </b-card>

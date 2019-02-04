@@ -7,9 +7,15 @@
     </div>
     <div class="card card-default">
       <div class="card-header">Lijst van gebruikers</div>
-
       <div class="card-body">
         <userList></userList>
+      </div>
+    </div>
+
+    <div class="card card-default">
+      <div class="card-header">Lijst van uitslagen</div>
+      <div class="card-body">
+        <uitslagen></uitslagen>
       </div>
     </div>
   </div>
@@ -17,12 +23,14 @@
 
 <script>
 import userList from "../../components/UserList.vue";
+import uitslagen from "../../components/Uitslagen.vue";
 export default {
   mounted() {
     //
   },
   components: {
-    userList
+    userList,
+    uitslagen
   }
 };
 </script>

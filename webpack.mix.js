@@ -33,6 +33,7 @@ mix.webpackConfig({
     new OfflinePlugin({
       publicPath      : '/',
       appShell        : '/',
+      caches          : 'all',
       responseStrategy: 'network-first',
       externals       : [
         '/',

@@ -8,12 +8,20 @@
         @prevquestion="prevquestion"
       ></question-component>
     </div>
-    <button class="btn btn_info" v-if="this.completed">Test afronden</button>
+    <br>
+    <b-row align-h="center">
+      <b-progress :value="currentQuestion
+      " :max="maxlength" show-value class="w-50"></b-progress>
+    </b-row>
+
+    <b-row>
+      <button class="btn btn_warning" v-if="this.completed">Test afronden</button>
+    </b-row>
   </div>
 </template>
 
 <script>
-import QuestionComponent from "../components/QuestionSlider.vue";
+import QuestionComponent from "../components/QuestionHearts.vue";
 import axios from "axios";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
@@ -25,10 +33,10 @@ export default {
       currentQuestion: 0,
       question: { id: "", name: "", antwoord: "" },
       deltaQuestions: [],
+      maxlength: 31,
       completed: false,
       isLoading: false,
-      atStart: false,
-      survey_id: -1
+      atStart: false
     };
   },
   methods: {
@@ -67,6 +75,7 @@ export default {
         .post("/surveys", json_questions)
         .then(({ data }) => {
           this.isLoading = false;
+          console.log("data: " + data);
         })
         .catch(function(error) {
           console.log(error);
@@ -117,15 +126,31 @@ export default {
       }
       this.storeQuestions();
     },
+    logQuestionArrays() {
+      for (let i = 0; i < this.questions.length; i++) {
+        console.log("rquestions: " + this.questions[i].antwoord + "\n");
+        console.log("dquestions: " + this.deltaQuestions[i].antwoord + "\n");
+        console.log("----------------------");
+      }
+    },
     checkComplete() {
       let complete = true;
       for (let i = 0; i < this.questions.length; i++) {
+        console.log(
+          "questions: " +
+            this.questions[i].id +
+            " :" +
+            this.questions[i].antwoord +
+            "\n"
+        );
         if (this.questions[i].antwoord == -1) {
           complete = false;
+          console.log("not completed yet");
           break;
         }
       }
       if (complete == true) {
+        console.log("completed!!!");
         this.completed = true;
       } else {
         this.completed = false;
@@ -135,6 +160,7 @@ export default {
   mounted() {
     this.isMounted = true;
     this.getQuestions();
+    this.maxlength = questions.length - 1;
   },
   components: { QuestionComponent, Loading }
 };
