@@ -1,33 +1,56 @@
 <template>
-  <div>
-    <h3>Lijst met gebruikers</h3>
-    <div class="alert alert-danger" v-if="has_error">
-      <p>Fout bij het ophalen van gebruikers.</p>
-    </div>
-
-    <table class="table">
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Naam</th>
-        <th scope="col">Email</th>
-        <th scope="col">Datum van registratie</th>
-      </tr>
-      <tr v-for="user in users" v-bind:key="user.id" style="margin-bottom: 5px;">
-        <th scope="row">{{ user.id }}</th>
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.created_at}}</td>
-      </tr>
-    </table>
-  </div>
+  <b-container>
+    <loading :active.sync="isLoading" color="#ff4119"></loading>
+    <b-table ref="table" bordered striped :items="items" :fields="fields" responsive>
+      <template slot="actions" slot-scope="row">
+        <a class="clickable" @click.stop="addTest(row.item.id)">
+          <font-awesome-icon class="icon-color" icon="plus-square" size="2x"/>
+        </a>
+        <a class="clickable" @click.stop="deleteUser(row.item.id)">
+          <font-awesome-icon class="icon-color" icon="trash-alt" size="2x"/>
+        </a>
+      </template>
+    </b-table>
+  </b-container>
 </template>
 
 <script>
+import axios from "axios";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 export default {
+  components: {
+    Loading
+  },
   data() {
     return {
       has_error: false,
-      users: null
+      users: null,
+      isLoading: false,
+      fields: {
+        id: {
+          label: "Id",
+          sortable: true
+        },
+        name: {
+          label: "Naam",
+          sortable: true
+        },
+        email: {
+          label: "Email",
+          sortable: false
+        },
+        created_at: {
+          label: "Aangemaakt op",
+          sortable: true
+        },
+        actions: {
+          label: "Acties",
+          sortable: false
+        }
+      },
+      items: []
     };
   },
 
@@ -42,13 +65,38 @@ export default {
         method: "GET"
       }).then(
         res => {
-          this.users = res.data.users;
+          this.items = res.data.users;
         },
         () => {
           this.has_error = true;
         }
       );
+    },
+    addTest(user_id) {
+      console.log("pressed add test: " + user_id);
+    },
+    deleteUser(user_id) {
+      this.isLoading = true;
+      axios
+        .delete(`/users/${user_id}`)
+        .then(({ data }) => {
+          console.log("succesvol verwijderd");
+          this.isLoading = false;
+          //this.$root.$emit('bv::refresh::table', 'userTable');
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
 };
 </script>
+
+<style scoped>
+.clickable:hover {
+  cursor: pointer;
+}
+.icon-color {
+  color: #00aeef;
+}
+</style>

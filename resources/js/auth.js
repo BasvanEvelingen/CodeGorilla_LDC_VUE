@@ -25,5 +25,8 @@ const config = {
   refreshData: {
     url     : 'auth/refresh', method  : 'GET', enabled : true, interval: 30,
   },
+  deleteData: {
+    url    : 'auth/delete', method : 'DELETE', enabled: true,
+  },
 }
 export default config

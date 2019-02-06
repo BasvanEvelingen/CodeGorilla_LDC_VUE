@@ -150,6 +150,9 @@ export default {
         rememberMe: true,
         fetchUser: true
       });
+    },
+    onCancel() {
+      console.log("gebruiker annuleert het laden.");
     }
   }
 };

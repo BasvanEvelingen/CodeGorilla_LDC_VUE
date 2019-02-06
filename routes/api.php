@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,6 +27,7 @@ Route::prefix('auth')->group(function () {
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('user', 'AuthController@user');
         Route::post('logout', 'AuthController@logout');
+
     });
 });
 
@@ -35,6 +35,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     //Users
     Route::get('users', 'UserController@index')->middleware('isAdmin');
     Route::get('users/{id}', 'UserController@show')->middleware('isAdminOrSelf');
+    Route::delete('users/{id}', 'UserController@delete')->middleware('isAdmin');
+
     //Questions from API
     Route::get('questions', 'QuestionsController@getQuestions')->middleware('isAdminOrUser');
     //Surveys
@@ -46,8 +48,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     //Survey_Details
     Route::get('surveyDetail', 'SurveyDetailsController@indexSurveyDetails')->middleware('isAdminOrSelf');
     Route::get('surveyDetail/{id}', 'SurveyDetailsController@getSurveyDetail')->middleware('isAdminOrSelf');
-    Route::post('surveyDetail', ' SurveyDetailsController@storeSurveyDetail')->middleware('isAdmin');
-    Route::put('surveyDetail', ' SurveyDetailsController@updateSurveyDetail')->middleware('isAdminOrSelf');
+    Route::post('surveyDetail', 'SurveyDetailsController@storeSurveyDetail')->middleware('isAdmin');
+    Route::put('surveyDetail', 'SurveyDetailsController@updateSurveyDetail')->middleware('isAdminOrSelf');
     Route::delete('surveyDetail/{id}', 'SurveyDetailsController@deleteSurveyDetail')->middleware('isAdmin');
 
 });

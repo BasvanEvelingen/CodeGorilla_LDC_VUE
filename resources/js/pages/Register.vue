@@ -131,6 +131,8 @@ export default {
     usernameErrorMessage() {
       if (!this.$v.username.required) {
         return "Gebruikersnaam is vereist.";
+      } else if (!this.$v.username.minLength) {
+        return "Uw naam moet minimaal 6 tekens bevatten.";
       }
     },
     emailErrorMessage() {
@@ -165,6 +167,7 @@ export default {
         this.isLoading = true;
         this.$auth.register({
           data: {
+            name: this.username,
             email: this.email,
             password: this.password,
             password_confirmation: this.password_confirmation

@@ -15,15 +15,25 @@ import Sweetalert from 'vue-sweetalert2'
 import Vuelidate from 'vuelidate'
 import Loading from './components/Loading'
 import Select2 from './components/Select'
-// import App from './App'
 import Index from '../Index'
 import router from './router'
 import store from './store'
+
+// fontAwesome
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faPlusSquare, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
+
+library.add(faPlusSquare, faTrashAlt)
 
 Vue.use(BootstrapVue)
 Vue.use(Notifications)
 Vue.use(Sweetalert)
 Vue.use(Vuelidate)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('font-awesome-layers', FontAwesomeLayers)
+Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
 
 // Set Vue router
 Vue.router = router

@@ -1,6 +1,5 @@
 <template>
-  <div class="app-component">
-    <loading :active.sync="isLoading" color="#ff4119"></loading>
+  <div class="app-component">c
     <div v-if="this.isLoading==false">
       <question-component
         :question="question"

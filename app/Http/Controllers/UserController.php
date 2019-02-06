@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -28,4 +29,31 @@ class UserController extends Controller
             ], 200
         );
     }
+
+    public function delete($id)
+    {
+
+        $user = User::find($id);
+        $user->delete();
+
+        return response()->json(
+            [
+                'verwijderd' => $id,
+            ], Response::HTTP_OK
+        );
+        /*
+
+    if ($user = Auth::user()) {
+    if ($user->delete()) {
+
+    return response()->json(
+    [
+    'verwijderd' => 'success',
+    ], Response::HTTP_OK
+    );
+    }
+    }
+     */
+    }
+
 }
