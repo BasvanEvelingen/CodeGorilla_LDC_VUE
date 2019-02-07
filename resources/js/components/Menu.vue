@@ -40,6 +40,10 @@ export default {
           {
             name: "Inloggen",
             path: "login"
+          },
+          {
+            name: "Over",
+            path: "about"
           }
         ],
 

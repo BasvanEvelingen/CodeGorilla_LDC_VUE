@@ -1,5 +1,5 @@
 <template>
-  <div class="app-component">c
+  <div class="app-component">
     <div v-if="this.isLoading==false">
       <question-component
         :question="question"
@@ -26,7 +26,7 @@ export default {
       deltaQuestions: [],
       completed: false,
       isLoading: false,
-      atStart: false,
+      atStart: true,
       survey_id: -1
     };
   },
@@ -62,14 +62,27 @@ export default {
         };
         json_questions.push(question_obj);
       }
-      axios
-        .post("/surveys", json_questions)
-        .then(({ data }) => {
-          this.isLoading = false;
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      if (this.atStart) {
+        axios
+          .post("/surveys", json_questions)
+          .then(({ data }) => {
+            this.isLoading = false;
+            this.atStart = false;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else if (!this.atStart) {
+        axios
+          .put("/surveys", json_questions)
+          .then(({ data }) => {
+            this.isLoading = false;
+            this.atStart = false;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
     },
     checkInputs() {
       if (this.question.antwoord > 0) return true;

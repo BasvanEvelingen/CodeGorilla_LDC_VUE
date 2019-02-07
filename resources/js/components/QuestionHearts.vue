@@ -104,13 +104,10 @@ export default {
   },
   methods: {
     nextquestion() {
-      this.$emit("nextquestion", [this.question.id, this.question.antwoord]);
+      this.$emit("nextquestion", [this.question.id, this.value * 10]);
     },
     prevquestion() {
-      this.$emit("prevquestion", [this.question.id, this.question.antwoord]);
-    },
-    updateRange() {
-      this.question.antwoord = this.value * 10;
+      this.$emit("prevquestion", [this.question.id, this.value * 10]);
     }
   },
   components: {

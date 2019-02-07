@@ -6,6 +6,11 @@ use App\SurveyDetail;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+/**
+ * @author Bas van Evelingen <BasvanEvelingen@me.com>
+ * @version 1.0.0
+ * Class for handling all the survey API methods
+ */
 class SurveyDetailsController extends Controller
 {
 
@@ -16,7 +21,8 @@ class SurveyDetailsController extends Controller
      */
     public function indexSurveyDetails()
     {
-
+        $surveys = Survey::all()->get();
+        return response(['surveys' => $surveys], Response::HTTP_OK);
     }
 
     /**
@@ -28,7 +34,7 @@ class SurveyDetailsController extends Controller
     public function getSurveyDetail($id)
     {
         $survey_detail = SurveyDetail::findOrFail($id)->first();
-        return response($survey_detail, Response::HTTP_OK);
+        return response(['survey' => $survey_detail], Response::HTTP_OK);
     }
 
     /**

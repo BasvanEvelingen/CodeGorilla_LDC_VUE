@@ -20,8 +20,10 @@ class SurveysController extends Controller
      */
     public function getSurvey($id)
     {
-
+        $survey = Survey::findOrFail($id);
+        return response($survey->survey->json(), Response::HTTP_OK);
     }
+
     /**
      * API INDEX ALL SURVEYS
      * Gives all surveys back admin, to get results or to complete a pending survey
@@ -30,7 +32,8 @@ class SurveysController extends Controller
      */
     public function indexSurveys()
     {
-
+        $surveys = Survey::all()->get();
+        return response($surveys->json(), Response::HTTP_OK);
     }
 
     /**
@@ -45,18 +48,17 @@ class SurveysController extends Controller
      */
     public function storeSurvey(Request $request)
     {
-
         $user = Auth::user();
         $username = $user->name;
         $date = new DateTime();
         $survey = new Survey();
         $survey->name = $username . $date->getTimestamp();
         $survey->user_id = $user->id;
-        $survey->survey = json_encode($request->json());
+        $survey->survey = json_encode($request->getContent());
         $survey->save();
         return response(['survey_id' => $survey->id], Response::HTTP_OK);
-
     }
+
     /**
      * API UPDATE Survey
      * Intermediate function for getting data front end and updating it on the back-end
@@ -68,9 +70,9 @@ class SurveysController extends Controller
     public function updateSurvey(Request $request, $id)
     {
         $survey = Survey::findOrFail($id);
-        $survey->survey = json_encode($request->json());
-        $suvey->save();
-        return response(null, Response::HTTP_OK);
+        $survey->survey = json_encode($request->getContent());
+        $survey->save();
+        return response(['status' => 'updated'], Response::HTTP_OK);
     }
 
     /**
@@ -81,7 +83,8 @@ class SurveysController extends Controller
      */
     public function deleteSurvey($id)
     {
-
+        $survey = Survey::find($id);
+        $survey->delete();
+        return response('status', 'survey deleted', Response::HTTP_OK);
     }
-
 }

@@ -1,7 +1,11 @@
 <template>
-  <div>
-    <b-img class="ldc-picture mt-5" :src="'/images/ldc_cglogo.svg'"/>
-  </div>
+  <b-container class="ldc-back">
+    <b-img
+      fluid-grow
+      class="ldc-picture mt-5"
+      :src="'/images/LDC_Logo_large_outlines_animated.svg'"
+    />
+  </b-container>
 </template>
 
 <style scoped>

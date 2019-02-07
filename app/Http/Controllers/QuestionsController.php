@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 use App\Survey;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @author Bas van Evelingen <BasvanEvelingen@me.com>
+ * All API methods concerning LDC REST Api
+ */
 class QuestionsController extends Controller
 {
    /**
@@ -55,7 +59,7 @@ class QuestionsController extends Controller
      */
     public function getQuestions()
     {
-        $offline = false;
+        $offline = true;
         switch ($offline) {
             case false:
                 // get api-call bodydata from json file

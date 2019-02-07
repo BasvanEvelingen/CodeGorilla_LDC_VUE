@@ -118,7 +118,8 @@ export default {
       email: "",
       password: "",
       password_confirmation: "",
-      isLoading: false
+      isLoading: false,
+      fullPage: true
     };
   },
   validations: {
@@ -200,6 +201,9 @@ export default {
           .catch(error => console.log(error));
           */
       // axios api register request.
+    },
+    onCancel() {
+      console.log("user cancelled loader");
     },
     sAlert() {
       const swalWithBootstrapButtons = Swal.mixin({

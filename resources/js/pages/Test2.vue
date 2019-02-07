@@ -1,6 +1,12 @@
 <template>
   <div class="app-component">
-    <loading :active.sync="isLoading" color="#ff4119"></loading>
+    <loading
+      :active.sync="isLoading"
+      :can-cancel="true"
+      :on-cancel="onCancel"
+      color="#FF4119"
+      :is-full-page="fullPage"
+    ></loading>
     <div v-if="this.isLoading==false">
       <question-component
         :question="question"
@@ -36,7 +42,9 @@ export default {
       maxlength: 31,
       completed: false,
       isLoading: false,
-      atStart: false
+      atStart: true,
+      fullPage: true,
+      survey_id: null
     };
   },
   methods: {
@@ -71,15 +79,28 @@ export default {
         };
         json_questions.push(question_obj);
       }
-      axios
-        .post("/surveys", json_questions)
-        .then(({ data }) => {
-          this.isLoading = false;
-          console.log("data: " + data);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      if (this.atStart) {
+        axios
+          .post("/surveys", json_questions)
+          .then(({ data }) => {
+            this.survey_id = data["survey_id"];
+            this.isLoading = false;
+            this.atStart = false;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else if (!this.atStart) {
+        axios
+          .put(`/surveys/${this.survey_id}`, json_questions)
+          .then(({ data }) => {
+            this.isLoading = false;
+            this.atStart = false;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
     },
     checkInputs() {
       if (this.question.antwoord > 0) return true;
@@ -155,6 +176,9 @@ export default {
       } else {
         this.completed = false;
       }
+    },
+    onCancel() {
+      console.log("user cancelled loader");
     }
   },
   mounted() {
