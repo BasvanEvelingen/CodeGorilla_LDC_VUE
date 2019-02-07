@@ -100,7 +100,6 @@ export default {
     return {
       email: "",
       password: "",
-      onCancel: "",
       fullPage: "",
       isLoading: false
     };
@@ -126,33 +125,66 @@ export default {
   methods: {
     login() {
       this.$v.$touch();
-      var redirect = this.$auth.redirect();
-      var app = this;
-      this.isLoading = true;
-      this.$auth.login({
-        params: {
-          email: app.email,
-          password: app.password
-        },
-        success: function() {
-          // handle redirection
-          this.isLoading = false;
-          const redirectTo = redirect
-            ? redirect.from.name
-            : this.$auth.user().role === 2
-            ? "admin.dashboard"
-            : "user.dashboard";
-          this.$router.push({ name: redirectTo });
-        },
-        error: function() {
-          app.has_error = true;
-        },
-        rememberMe: true,
-        fetchUser: true
-      });
+      if (this.$v.$invalid) {
+        this.sAlert();
+      } else {
+        var redirect = this.$auth.redirect();
+        var app = this;
+        this.isLoading = true;
+        this.$auth.login({
+          params: {
+            email: app.email,
+            password: app.password
+          },
+          success: function() {
+            // handle redirection
+            this.isLoading = false;
+            const redirectTo = redirect
+              ? redirect.from.name
+              : this.$auth.user().role === 2
+              ? "admin.dashboard"
+              : "user.dashboard";
+            this.$router.push({ name: redirectTo });
+          },
+          error: function() {
+            this.isLoading = false;
+            this.sAlertLogin();
+            app.has_error = true;
+          },
+          rememberMe: true,
+          fetchUser: true
+        });
+      }
     },
     onCancel() {
       console.log("gebruiker annuleert het laden.");
+    },
+
+    sAlert() {
+      const swalWithBootstrapButtons = Swal.mixin({
+        confirmButtonClass: "btn btn-danger",
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        type: "error",
+        title: "Fout in formulier",
+        text:
+          "Er zijn fouten geconstateerd bij het invullen van het formulier.",
+        footer: "druk op ok om fouten te herstellen",
+        confirmButtonText: "Ok"
+      });
+    },
+    sAlertLogin() {
+      const swalWithBootstrapButtons = Swal.mixin({
+        confirmButtonClass: "btn btn-danger",
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        type: "error",
+        title: "Fout",
+        text: "Foutieve gebruikersnaam en/of wachtwoord",
+        confirmButtonText: "Ok"
+      });
     }
   }
 };

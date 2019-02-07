@@ -7,13 +7,8 @@
         <b-card-body>
           <b-list-group flush>
             <b-list-group-item>
-              <router-link to="test">
-                <a>Test 1</a>
-              </router-link>
-            </b-list-group-item>
-            <b-list-group-item>
               <router-link to="test2">
-                <a>Test 2</a>
+                <a>Test Voorbeeld</a>
               </router-link>
             </b-list-group-item>
           </b-list-group>
@@ -22,10 +17,7 @@
 
       <b-card header="Uitslagen" title="Kies een uitslag">
         <b-card-body>
-          <b-list-group flush>
-            <b-list-group-item>Uitslag Test</b-list-group-item>
-            <b-list-group-item>Uitslag Test 2</b-list-group-item>
-          </b-list-group>
+          <Outcome></Outcome>
         </b-card-body>
       </b-card>
     </b-card-group>
@@ -33,6 +25,8 @@
 </template>
 
 <script>
+import Outcome from "../../components/Outcome.vue";
+
 export default {
   data() {
     return {
@@ -40,7 +34,7 @@ export default {
     };
   },
   components: {
-    //
+    Outcome
   }
 };
 </script>

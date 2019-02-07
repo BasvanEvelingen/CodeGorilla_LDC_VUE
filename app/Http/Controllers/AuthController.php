@@ -9,8 +9,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 
+/**
+ * @author Bas van Evelingen <BasvanEvelingen@me.com>
+ * @version 1.0.1
+ * Class for handling all user authentication
+ */
 class AuthController extends Controller
 {
+    /**
+     * @author Bas van Evelingen <BasvanEvelingen@me.com>
+     * @version 1.0.1
+     *
+     * @param Request $request with all form data from vue.js
+     * @return success or fail message
+     */
     public function register(Request $request)
     {
         $v = Validator::make($request->all(), [
@@ -35,6 +47,13 @@ class AuthController extends Controller
 
     }
 
+    /**
+     * @author Bas van Evelingen <BasvanEvelingen@me.com>
+     * @version 1.0.1
+     * Method for authenticating user
+     * @param Request $request with users credentials from form in vue.js
+     * @return success or fail message and redirect if succesful.
+     */
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -47,6 +66,7 @@ class AuthController extends Controller
 
     public function logout()
     {
+        dd("logout");
         $this->guard()->logout();
 
         return response()->json([
@@ -79,6 +99,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
+        dd(' die');
         try
         {
             if ($token = JWTAuth::getToken()) {

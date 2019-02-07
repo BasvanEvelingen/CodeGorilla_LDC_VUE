@@ -8,6 +8,7 @@ import Dashboard from '../../pages/user/Dashboard'
 import AdminDashboard from '../../pages/admin/Dashboard'
 import Test from '../../pages/Test'
 import Test2 from '../../pages/Test2'
+import About from '../../pages/About'
 
 // import LDC from '../containers/LDC'
 
@@ -17,6 +18,12 @@ const routes = [
     path     : '/',
     name     : 'home',
     component: Home,
+    meta     : { auth: undefined },
+  },
+  {
+    path     : '/about',
+    name     : 'about',
+    component: About,
     meta     : { auth: undefined },
   },
   {

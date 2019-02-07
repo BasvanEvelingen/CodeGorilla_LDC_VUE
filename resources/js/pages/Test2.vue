@@ -7,8 +7,9 @@
       color="#FF4119"
       :is-full-page="fullPage"
     ></loading>
-    <div v-if="this.isLoading==false">
+    <div>
       <question-component
+        class="question"
         :question="question"
         @nextquestion="nextquestion"
         @prevquestion="prevquestion"
@@ -19,7 +20,6 @@
       <b-progress :value="currentQuestion
       " :max="maxlength" show-value class="w-50"></b-progress>
     </b-row>
-
     <b-row>
       <button class="btn btn_warning" v-if="this.completed">Test afronden</button>
     </b-row>
@@ -190,4 +190,7 @@ export default {
 </script>
 
 <style scoped>
+.question {
+  min-height: 550px;
+}
 </style>

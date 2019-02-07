@@ -21,10 +21,10 @@ import store from './store'
 
 // fontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlusSquare, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faQuestion, faPlusSquare, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 
-library.add(faPlusSquare, faTrashAlt)
+library.add(faQuestion, faPlusSquare, faTrashAlt)
 
 Vue.use(BootstrapVue)
 Vue.use(Notifications)

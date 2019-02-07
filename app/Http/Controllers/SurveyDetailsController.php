@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 /**
  * @author Bas van Evelingen <BasvanEvelingen@me.com>
  * @version 1.0.0
- * Class for handling all the survey API methods
+ * Class for handling all the survey details methods
  */
 class SurveyDetailsController extends Controller
 {

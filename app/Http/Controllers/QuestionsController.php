@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * @author Bas van Evelingen <BasvanEvelingen@me.com>
- * All API methods concerning LDC REST Api
+ * @version 2.0
+ * Class for All API methods concerning LDC REST Api
  */
 class QuestionsController extends Controller
 {
@@ -59,7 +60,7 @@ class QuestionsController extends Controller
      */
     public function getQuestions()
     {
-        $offline = true;
+        $offline = false;
         switch ($offline) {
             case false:
                 // get api-call bodydata from json file
@@ -127,7 +128,10 @@ class QuestionsController extends Controller
     public function postAnswers(Request $request)
     {
         // tijdelijk voorbeeld voor testen
-        //$request = Storage::disk('local')->get('ldc_sampleanswers.json');
+        
+        $request = Storage::disk('local')->get('ldc_sampleanswers.json');
+        
+        
 
         // new guzzle instance
         $client = new Client();

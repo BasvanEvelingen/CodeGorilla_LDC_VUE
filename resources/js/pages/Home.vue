@@ -1,5 +1,5 @@
 <template>
-  <b-container class="ldc-back">
+  <b-container>
     <b-img
       fluid-grow
       class="ldc-picture mt-5"
@@ -7,6 +7,17 @@
     />
   </b-container>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      image: "'/images/laptop.jpg'"
+    };
+  }
+};
+</script>
+
 
 <style scoped>
 .ldc-picture {

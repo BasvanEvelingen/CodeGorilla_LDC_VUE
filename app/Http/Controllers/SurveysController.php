@@ -8,12 +8,17 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @author Bas van Evelingen <BasvanEvelingen@me.com>
+ * @version 1.0.1
+ * Class for handling all surveys in the application
+ */
 class SurveysController extends Controller
 {
 
     /**
      * API GET SURVEY
-     * Gives survey back to user or admin, to get results or to complete a pending survey
+     * Gives one survey back to user or admin, to get results or to complete a pending survey
      * @param $id the id of the survey to be given
      * @return $response gives back survey data
      * in survey to be updated.
@@ -32,8 +37,8 @@ class SurveysController extends Controller
      */
     public function indexSurveys()
     {
-        $surveys = Survey::all()->get();
-        return response($surveys->json(), Response::HTTP_OK);
+        $surveys = Survey::all();
+        return response($surveys, Response::HTTP_OK);
     }
 
     /**
