@@ -1,15 +1,20 @@
 <template>
-  <div class="app flex-row align-items-center background">
-    <div class="container" v-bind:style="{ backgroundImage: 'url(' + image + ')' }">
-      <b-row class="justify-content-center background">
-        <b-col md="6">
-          <div class="clearfix">
-            <h1 class="display-3 mr-4 text-danger">Sebastiaan van Evelingen</h1>
-            <h4 class="pt-3 text-white">CodeGorilla Trainee</h4>
-            <p class="text-muted">Leeuwarden 2019</p>
-          </div>
-        </b-col>
-      </b-row>
+<div>
+  <div class="overlay"></div>
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+        <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4">
+    </video>
+    <div class="container h-100">
+        <div class="d-flex text-center h-100">
+            <div class="my-auto w-100 text-white">
+                <div class="dp">
+                    <img src="img/logo.png">
+                </div>  
+                <span class="coming">
+                <h2>Coming Soon</h2>
+                </span>
+            </div>
+        </div>
     </div>
   </div>
 </template>

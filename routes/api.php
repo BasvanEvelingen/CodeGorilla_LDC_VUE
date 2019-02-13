@@ -37,9 +37,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('users/{id}', 'UserController@show')->middleware('isAdminOrSelf');
     Route::delete('users/{id}', 'UserController@delete')->middleware('isAdmin');
 
-    //Questions from API
+    //Questions from LDC API
     Route::get('questions', 'QuestionsController@getQuestions')->middleware('isAdminOrUser');
     Route::post('questions', 'QuestionsController@postAnswers')->middleware('isAdminOrUser');
+    Route::get('levels', 'QuestionController@getProfessionLevels')->middleware('isAdminOrUser');
+   
+   
     //Surveys
     Route::get('surveys', 'SurveysController@indexSurveys')->middleware('isAdminOrUser');
     Route::get('surveys/{id}', 'SurveysController@getSurvey')->middleware('isAdminOrSelf');
@@ -52,5 +55,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('surveyDetail', 'SurveyDetailsController@storeSurveyDetail')->middleware('isAdmin');
     Route::put('surveyDetail', 'SurveyDetailsController@updateSurveyDetail')->middleware('isAdminOrSelf');
     Route::delete('surveyDetail/{id}', 'SurveyDetailsController@deleteSurveyDetail')->middleware('isAdmin');
+
 
 });

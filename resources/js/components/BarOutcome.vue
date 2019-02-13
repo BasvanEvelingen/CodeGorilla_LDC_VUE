@@ -6,7 +6,7 @@ const datasets = [
     label: "Uitkomst Test Watmijligt",
     backgroundColor: "rgba(255,255,255,.3)",
     borderColor: "transparent",
-    data: [78, 81, 80, 45, 34, 12, 40, 75, 34, 89, 32, 68, 54, 72, 18, 98]
+    data: []
   }
 ];
 
@@ -16,24 +16,7 @@ export default {
   mounted() {
     this.renderChart(
       {
-        labels: [
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          ""
-        ],
+        labels: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
         datasets: datasets
       },
       {

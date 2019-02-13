@@ -9,7 +9,9 @@ trait FileUploadTrait
 {
 
     /**
-     * File upload trait used in controllers to upload files
+     * @author Bas van Evelingen <BasvanEvelingen@me.com>
+     * @version 0.5
+     * Controller for uploading pictures
      */
     public function saveFiles(Request $request)
     {

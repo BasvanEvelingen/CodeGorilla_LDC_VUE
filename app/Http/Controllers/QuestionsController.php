@@ -13,10 +13,22 @@ use Illuminate\Support\Facades\Auth;
 /**
  * @author Bas van Evelingen <BasvanEvelingen@me.com>
  * @version 2.0
- * Class for All API methods concerning LDC REST Api
+ * Class for All API methods concerning LDC Business CodeGorilla API
+ * there's a variable $demo, which will be set to true when LDC API will not be avaiable, so functionality can 
+ * still be tested
  */
 class QuestionsController extends Controller
 {
+
+   // DEMO VARIABLE
+   private $demo = false;
+
+   /** SET DEMOMODE ON/OFF WITH BOOLEAN */
+   public function setDemo($bool) {
+       $this->demo = $bool;
+       return response(['demomode'=>$bool],Response::HTTP_OK);
+   }
+
    /**
     * API GET INDEX OF QUESTIONS
     * Testing method for making API call currently not in the routes
@@ -25,8 +37,8 @@ class QuestionsController extends Controller
     */
     public function index()
     {
-        $offline = true;
-        switch ($offline) {
+        
+        switch ($this->demo) {
             case false:
                 $json = Storage::disk('local')->get('ldc_getquestions.json');
                 $client = new Client();
@@ -43,7 +55,6 @@ class QuestionsController extends Controller
                 break;
             case true:
                 $response = Storage::disk('local')->get('ldc_samplequestions');
-                dd('$response: '.$response);
                 break;
         }
         return response($response, Response::HTTP_OK);
@@ -56,12 +67,12 @@ class QuestionsController extends Controller
      * Both async/promise based. Guzzle on this back-end and Axios on Vue.js front-end
      * Sends POST request and receives GET request from front-end
      * @return $response in json format 
-     * @var $offline for testing when disconnected from api.
+     * @var demo for testing when disconnected from api.
      */
     public function getQuestions()
     {
-        $offline = false;
-        switch ($offline) {
+       
+        switch ($this->demo) {
             case false:
                 // get api-call bodydata from json file
                 $json = Storage::disk('local')->get('ldc_getquestions.json');
@@ -96,6 +107,10 @@ class QuestionsController extends Controller
      */
     public function getProfessionLevels()
     {
+
+        switch ($this->demo) {
+        case false:
+        
         // get api-call bodydata from json file
         $json = Storage::disk('local')->get('ldc_getlevels.json');
 
@@ -113,6 +128,11 @@ class QuestionsController extends Controller
         );
         // Even wachten op antwoord van server
         $response = $promise->wait();
+        break;
+        case true:
+         // no api-call avaiable so we're gonna send some sampledata
+         $response = Storage::disk('local')->get('ldc_samplelevels.json');
+        }
 
         return response($response, Response::HTTP_OK);
 
@@ -127,27 +147,29 @@ class QuestionsController extends Controller
      */
     public function postAnswers(Request $request)
     {
-        // tijdelijk voorbeeld voor testen
-        
-        $request = Storage::disk('local')->get('ldc_sampleanswers.json');
-        
-        
-
-        // new guzzle instance
-        $client = new Client();
-        $URI = 'https://staging.ldc.nl';
-        $headers = ['Content-Type' => 'application/json'];
-        // try to get levels
-        $promise = $client->requestAsync('POST', $URI, ['headers' => $headers, 'body' => $request])->then(
-            function ($response) {
-                return $response->getBody();
-            }, function ($exception) {
-                return $exception->getMessage();
-            }
-        );
-        // Even wachten op antwoord
-        $response = $promise->wait();
-       
-        return response($response, Response::HTTP_OK);
+        switch ($this->demo) {
+        case false:
+    
+            // new guzzle instance
+            $client = new Client();
+            $URI = 'https://staging.ldc.nl';
+            $headers = ['Content-Type' => 'application/json'];
+            // try to get levels
+            $promise = $client->requestAsync('POST', $URI, ['headers' => $headers, 'body' => $request])->then(
+                function ($response) {
+                    return $response->getBody();
+                }, function ($exception) {
+                    return $exception->getMessage();
+                }
+            );
+            // Even wachten op antwoord
+            $response = $promise->wait();
+            break;
+            case true:
+                // no api-call avaiable so we're gonna send some sampledata
+                $request = Storage::disk('local')->get('ldc_sampleanswers.json');
+            break;
+        }    
+            return response($response, Response::HTTP_OK);
     }
 }
